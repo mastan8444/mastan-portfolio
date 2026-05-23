@@ -1,0 +1,6 @@
+{
+  "name": "Shaik Mastan Saheb Portfolio",
+  "description": "Shaik Mastan Saheb's Professional Portfolio and AI-Agent-powered Case Studies showcasing Agentic AI, Machine Learning, and Full-Stack Engineering projects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

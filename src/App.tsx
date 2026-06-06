@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ShaikProfile } from "./data";
 import { 
   Bot, 
@@ -21,7 +21,9 @@ import {
   MessageSquareCode,
   Loader2,
   Menu,
-  X
+  X,
+  Sun,
+  Moon
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -36,6 +38,24 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<"about" | "projects" | "case-studies" | "timeline" | "skills" | "ai-agent">("about");
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("portfolio-theme");
+      return saved === "dark";
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (darkMode) {
+      root.classList.add("dark");
+      localStorage.setItem("portfolio-theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      localStorage.setItem("portfolio-theme", "light");
+    }
+  }, [darkMode]);
 
   // Direct Mail Dispatch Deck States
   const [senderName, setSenderName] = useState("");
@@ -92,40 +112,40 @@ export default function App() {
   ] as const;
 
   return (
-    <div id="app-root-container" className="min-h-screen bg-[#080808] text-white font-sans grid-pattern relative selection:bg-[#E5FF45]/25 selection:text-[#E5FF45]">
+    <div id="app-root-container" className="min-h-screen bg-[#F6F6F3] dark:bg-black text-slate-800 dark:text-slate-200 font-sans grid-pattern relative selection:bg-[#E5FF45] selection:text-black transition-colors duration-300">
       
-      {/* Absolute Ambient Glow decorations */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#E5FF45]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-[#E5FF45]/3 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-white/2 rounded-full blur-[100px] pointer-events-none" />
+      {/* Absolute Ambient Light decorations */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-lime-400/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-sky-400/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-slate-200/40 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Floating Animated Dots background decor (simulation of Agentic nodes) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="floating-dot absolute left-[10%] bottom-[-5%] w-1.5 h-1.5 rounded-full bg-[#E5FF45] opacity-20" />
-        <div className="floating-dot absolute left-[30%] bottom-[-8%] w-2 h-2 rounded-full bg-white opacity-20" style={{ animationDelay: "2s" }} />
-        <div className="floating-dot absolute left-[75%] bottom-[-4%] w-1.5 h-1.5 rounded-full bg-[#E5FF45] opacity-10" style={{ animationDelay: "4s" }} />
-        <div className="floating-dot absolute left-[90%] bottom-[-6%] w-2.5 h-2.5 rounded-full bg-white opacity-10" style={{ animationDelay: "6s" }} />
+        <div className="floating-dot absolute left-[10%] bottom-[-5%] w-1.5 h-1.5 rounded-full bg-lime-500 opacity-30" />
+        <div className="floating-dot absolute left-[30%] bottom-[-8%] w-2 h-2 rounded-full bg-slate-400 opacity-30" style={{ animationDelay: "2s" }} />
+        <div className="floating-dot absolute left-[75%] bottom-[-4%] w-1.5 h-1.5 rounded-full bg-lime-500 opacity-25" style={{ animationDelay: "4s" }} />
+        <div className="floating-dot absolute left-[90%] bottom-[-6%] w-2.5 h-2.5 rounded-full bg-slate-400 opacity-20" style={{ animationDelay: "6s" }} />
       </div>
 
       {/* STICKY HEADER & HIGHLIGHTED NAVIGATION */}
-      <header id="app-main-navbar" className="sticky top-0 z-50 bg-[#080808]/90 backdrop-blur-xl border-b border-white/10 px-4 md:px-8">
+      <header id="app-main-navbar" className="sticky top-0 z-50 bg-[#F6F6F3]/90 dark:bg-black/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 px-4 md:px-8 transition-colors duration-350">
         <div className="max-w-7xl mx-auto flex items-center justify-between py-4">
           
           {/* Logo Name block */}
           <div className="flex items-center gap-3">
-            <div id="nav-logo-widget" className="p-2.5 bg-[#E5FF45] rounded-xl flex items-center justify-center text-black shadow-[0_0_15px_rgba(229,255,69,0.25)]">
+            <div id="nav-logo-widget" className="p-2.5 bg-slate-900 dark:bg-slate-800 rounded-xl flex items-center justify-center text-[#E5FF45] shadow-md">
               <MessageSquareCode size={18} className="stroke-[2.5px]" />
             </div>
             <div>
-              <span className="text-10px font-mono text-[#E5FF45] tracking-widest block font-bold">// SHAIK.DEV</span>
-              <h1 className="text-sm sm:text-base font-display font-black text-white tracking-wide uppercase">
+              <span className="text-10px font-mono text-lime-600 dark:text-lime-450 tracking-widest block font-bold">// SHAIK.DEV</span>
+              <h1 className="text-sm sm:text-base font-display font-black text-slate-900 dark:text-white tracking-wide uppercase">
                 Shaik Mastan Saheb
               </h1>
             </div>
           </div>
 
           {/* Desktop dynamic Navigation tabs */}
-          <nav className="hidden lg:flex items-center gap-1.5 p-1 bg-[#121212]/90 border border-white/10 rounded-xl">
+          <nav className="hidden lg:flex items-center gap-1 p-1 bg-slate-200/60 dark:bg-slate-900/40 border border-slate-300/40 dark:border-slate-800 rounded-xl">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -138,18 +158,18 @@ export default function App() {
                       setSelectedCaseId(null);
                     }
                   }}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-xs font-mono rounded-lg tracking-wide uppercase transition-all duration-300 relative cursor-pointer border border-transparent hover:border-white/5 hover:text-white ${
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-mono rounded-lg tracking-wide uppercase transition-all duration-300 relative cursor-pointer border border-transparent hover:text-slate-900 dark:hover:text-white ${
                     isActive
-                      ? "text-[#E5FF45] font-bold shadow-[0_0_15px_rgba(229,255,69,0.05)]"
-                      : "text-white/60"
+                      ? "text-white dark:text-slate-950 font-bold z-10"
+                      : "text-slate-600 dark:text-slate-400"
                   }`}
                 >
                   {tab.icon}
-                  <span>{tab.label}</span>
+                  <span className="relative z-10">{tab.label}</span>
                   {isActive && (
                     <motion.div
                       layoutId="activeNavIndicator"
-                      className="absolute inset-0 bg-[#E5FF45]/10 border border-[#E5FF45]/20 rounded-lg -z-10"
+                      className="absolute inset-0 bg-slate-900 dark:bg-[#E5FF45] rounded-lg"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -158,15 +178,30 @@ export default function App() {
             })}
           </nav>
 
-          {/* Mobile hamburger menu toggle */}
-          <button
-            id="mobile-hamburger-btn"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2.5 bg-[#121212] border border-white/10 text-white hover:text-[#E5FF45] hover:border-[#E5FF45]/30 rounded-xl transition-all duration-300 flex items-center justify-center cursor-pointer"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
+          {/* Core Controls Block (Theme Toggle & Hamburger) */}
+          <div className="flex items-center gap-2">
+            
+            {/* Elegant Dark/Light Mode Toggle */}
+            <button
+              id="theme-toggle-btn"
+              onClick={() => setDarkMode(!darkMode)}
+              className="p-2.5 bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-[#E5FF45] hover:text-lime-600 dark:hover:text-lime-300 rounded-xl transition-all duration-300 flex items-center justify-center cursor-pointer shadow-xs"
+              title={darkMode ? "Activate Light Theme" : "Activate Dark Theme"}
+            >
+              {darkMode ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
+
+            {/* Mobile hamburger menu toggle */}
+            <button
+              id="mobile-hamburger-btn"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2.5 bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:text-lime-600 dark:hover:text-lime-400 rounded-xl transition-all duration-300 flex items-center justify-center cursor-pointer shadow-xs"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+
+          </div>
         </div>
 
         {/* Mobile slide-out dynamic navigation menu */}
@@ -177,9 +212,9 @@ export default function App() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="lg:hidden border-t border-white/10 overflow-hidden bg-[#0c0c0c]/98 pb-4"
+              className="lg:hidden border-t border-slate-200 dark:border-slate-800 overflow-hidden bg-white/98 dark:bg-black/95 pb-4 shadow-xl"
             >
-              <nav className="pt-3 space-y-1.5 flex flex-col">
+              <nav className="pt-3 space-y-1 flex flex-col px-2">
                 {tabs.map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -194,8 +229,8 @@ export default function App() {
                       }}
                       className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-mono tracking-wider uppercase transition-all duration-200 cursor-pointer border ${
                         isActive
-                          ? "bg-[#E5FF45]/10 text-[#E5FF45] border-[#E5FF45]/20 font-bold"
-                          : "bg-transparent text-white/60 hover:text-white hover:bg-white/5 border-transparent"
+                          ? "bg-slate-900 dark:bg-[#E5FF45] text-white dark:text-black border-slate-900 dark:border-[#E5FF45] font-bold"
+                          : "bg-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900/40 border-transparent"
                       }`}
                     >
                       {tab.icon}
@@ -228,74 +263,74 @@ export default function App() {
                   
                   {/* Left Column Profile text */}
                   <div className="lg:col-span-7 space-y-6">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#E5FF45]/15 border border-[#E5FF45]/20 text-[#E5FF45] font-mono text-xs rounded-full">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-lime-500/10 dark:bg-lime-400/10 border border-lime-500/20 dark:border-lime-400/20 text-lime-700 dark:text-lime-400 font-mono text-xs rounded-full">
                       <Sparkles size={12} className="animate-pulse" />
-                      <span>Ready for Impact Opportunities</span>
+                      <span>Open to Opportunities & Internships</span>
                     </div>
 
-                    <h2 className="text-5xl md:text-7xl font-display font-black text-white tracking-tighter leading-[0.95]">
-                      CRAFTING MODERN <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#E5FF45]">AGENTIC AI</span> & FULL-STACK SYSTEMS
+                    <h2 className="text-5xl md:text-7xl font-display font-black text-slate-900 dark:text-white tracking-tighter leading-[0.95]">
+                      Building Smart <span className="text-lime-600 dark:text-lime-400">AI Agents</span> & Modern Web Apps
                     </h2>
 
-                    <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-2xl font-sans font-light">
+                    <p className="text-slate-600 dark:text-slate-300 text-base md:text-lg leading-relaxed max-w-2xl font-sans font-light">
                       {ShaikProfile.summary}
                     </p>
 
-                    {/* TACTICAL PROFILE DATA TERMINAL - HIGH IMPACT SECURE CONTACTS IN THE MAIN HERO AREA */}
+                    {/* TACTICAL PROFILE DATA TERMINAL - HIGH IMPACT CONTACTS */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2 max-w-2xl">
                       
                       {/* Name Card */}
-                      <div className="p-3.5 bg-white/3 border border-white/10 hover:border-[#E5FF45]/30 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-[0_0_15px_rgba(229,255,69,0.08)]">
-                        <div className="w-9 h-9 rounded-xl bg-[#E5FF45]/10 text-[#E5FF45] border border-[#E5FF45]/20 flex items-center justify-center group-hover/contact:bg-[#E5FF45] group-hover/contact:text-black transition-all duration-300">
+                      <div className="p-3.5 bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-slate-800/80 hover:border-lime-500/80 dark:hover:border-lime-400 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-md">
+                        <div className="w-9 h-9 rounded-xl bg-lime-500/10 dark:bg-lime-400/10 text-lime-700 dark:text-lime-450 border border-lime-500/20 dark:border-lime-400/20 flex items-center justify-center group-hover/contact:bg-lime-600 group-hover/contact:text-white transition-all duration-300">
                           <Bot size={15} />
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[9px] font-mono text-white/40 block">// SYSTEM OWNER</span>
-                          <span className="text-xs font-mono font-bold text-white truncate block">Shaik Mastan Saheb</span>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 block font-bold">// ABOUT ME</span>
+                          <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-100 truncate block">Shaik Mastan Saheb</span>
                         </div>
                       </div>
 
                       {/* Phone Card */}
-                      <a href={`tel:${ShaikProfile.phone}`} className="p-3.5 bg-white/3 border border-white/10 hover:border-[#E5FF45]/30 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-[0_0_15px_rgba(229,255,69,0.08)] cursor-pointer">
-                        <div className="w-9 h-9 rounded-xl bg-white/5 text-white border border-white/10 flex items-center justify-center group-hover/contact:bg-[#E5FF45] group-hover/contact:text-black group-hover/contact:border-[#E5FF45] transition-all duration-300">
+                      <a href={`tel:${ShaikProfile.phone}`} className="p-3.5 bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-slate-800/80 hover:border-lime-500/80 dark:hover:border-lime-400 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-md cursor-pointer">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 flex items-center justify-center group-hover/contact:bg-lime-600 group-hover/contact:text-white group-hover/contact:border-lime-600 transition-all duration-300">
                           <Phone size={14} />
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[9px] font-mono text-white/40 block">// SECURE VOICE LINE</span>
-                          <span className="text-xs font-mono text-white group-hover:text-[#E5FF45] transition-colors truncate block">{ShaikProfile.phone}</span>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-50 block font-bold">// PHONE CONTACT</span>
+                          <span className="text-xs font-mono text-slate-800 dark:text-slate-300 truncate block group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors font-semibold">{ShaikProfile.phone}</span>
                         </div>
                       </a>
 
                       {/* Email Card */}
-                      <a href={`mailto:${ShaikProfile.email}`} className="p-3.5 bg-white/3 border border-white/10 hover:border-[#E5FF45]/30 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-[0_0_15px_rgba(229,255,69,0.08)] cursor-pointer">
-                        <div className="w-9 h-9 rounded-xl bg-white/5 text-white border border-white/10 flex items-center justify-center group-hover/contact:bg-[#E5FF45] group-hover/contact:text-black group-hover/contact:border-[#E5FF45] transition-all duration-300">
+                      <a href={`mailto:${ShaikProfile.email}`} className="p-3.5 bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-slate-800/80 hover:border-lime-500/80 dark:hover:border-lime-400 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-md cursor-pointer">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 flex items-center justify-center group-hover/contact:bg-lime-600 group-hover/contact:text-white group-hover/contact:border-lime-600 transition-all duration-300">
                           <Mail size={14} />
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[9px] font-mono text-white/40 block">// SECURE DIRECT MAIL</span>
-                          <span className="text-xs font-mono text-white group-hover:text-[#E5FF45] transition-colors truncate block">{ShaikProfile.email}</span>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-50 block font-bold">// EMAIL CONTACT</span>
+                          <span className="text-xs font-mono text-slate-800 dark:text-slate-300 truncate block group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors font-semibold">{ShaikProfile.email}</span>
                         </div>
                       </a>
 
                       {/* LinkedIn Card */}
-                      <a href={ShaikProfile.linkedin} target="_blank" rel="noreferrer" className="p-3.5 bg-white/3 border border-white/10 hover:border-[#E5FF45]/30 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-[0_0_15px_rgba(229,255,69,0.08)] cursor-pointer">
-                        <div className="w-9 h-9 rounded-xl bg-white/5 text-white border border-white/10 flex items-center justify-center group-hover/contact:bg-[#E5FF45] group-hover/contact:text-black group-hover/contact:border-[#E5FF45] transition-all duration-300">
+                      <a href={ShaikProfile.linkedin} target="_blank" rel="noreferrer" className="p-3.5 bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-slate-800/80 hover:border-lime-500/80 dark:hover:border-lime-400 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-md cursor-pointer">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 flex items-center justify-center group-hover/contact:bg-lime-600 group-hover/contact:text-white group-hover/contact:border-lime-600 transition-all duration-300">
                           <Linkedin size={14} />
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[9px] font-mono text-white/40 block">// NETWORK HANDSHAKE</span>
-                          <span className="text-xs font-mono text-white truncate block group-hover:text-[#E5FF45] transition-colors">Shaik Mastan Saheb</span>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 font-bold uppercase block">// LINKEDIN PROFILE</span>
+                          <span className="text-xs font-mono text-slate-800 dark:text-slate-300 truncate block group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors font-semibold">Shaik Mastan Saheb</span>
                         </div>
                       </a>
 
                       {/* GitHub Card */}
-                      <a href={ShaikProfile.github} target="_blank" rel="noreferrer" className="p-3.5 bg-white/3 border border-white/10 hover:border-[#E5FF45]/30 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-[0_0_15px_rgba(229,255,69,0.08)] cursor-pointer sm:col-span-2">
-                        <div className="w-9 h-9 rounded-xl bg-white/5 text-white border border-white/10 flex items-center justify-center group-hover/contact:bg-[#E5FF45] group-hover/contact:text-black group-hover/contact:border-[#E5FF45] transition-all duration-300">
+                      <a href={ShaikProfile.github} target="_blank" rel="noreferrer" className="p-3.5 bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-slate-800/80 hover:border-lime-500/80 dark:hover:border-lime-400 rounded-2xl flex items-center gap-3 transition-all duration-300 group/contact hover:shadow-md cursor-pointer sm:col-span-2">
+                        <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 flex items-center justify-center group-hover/contact:bg-lime-600 group-hover/contact:text-white group-hover/contact:border-lime-600 transition-all duration-300">
                           <Github size={14} />
                         </div>
                         <div className="min-w-0">
-                          <span className="text-[9px] font-mono text-white/40 block">// SYSTEM CODEBASE HUB</span>
-                          <span className="text-xs font-mono text-white group-hover:text-[#E5FF45] transition-colors truncate block">github.com/Shaik-Mastan-Saheb</span>
+                          <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 block font-bold">// GITHUB PROFILE</span>
+                          <span className="text-xs font-mono text-slate-800 dark:text-slate-300 group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors truncate block font-semibold">github.com/mastan8444</span>
                         </div>
                       </a>
 
@@ -305,17 +340,17 @@ export default function App() {
                     <div id="quick-view-controls" className="flex flex-wrap items-center gap-4 pt-4">
                       <button
                         onClick={() => setActiveTab("projects")}
-                        className="bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-[#E5FF45]/40 px-5 py-3 text-xs font-mono font-bold uppercase rounded-xl tracking-wider transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.08)] cursor-pointer flex items-center gap-1.5"
+                        className="bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 px-5 py-3 text-xs font-mono font-bold uppercase rounded-xl tracking-wider transition-all duration-300 hover:shadow-sm cursor-pointer flex items-center gap-1.5"
                       >
-                        <span>Inspect Systems</span>
-                        <ChevronRight size={12} />
+                        <span>View Projects</span>
+                        <ChevronRight size={12} className="text-slate-500" />
                       </button>
                       <button
                         onClick={() => setActiveTab("ai-agent")}
-                        className="bg-[#E5FF45]/10 hover:bg-[#E5FF45]/20 text-[#E5FF45] border border-[#E5FF45]/20 hover:border-[#E5FF45]/60 px-5 py-3 text-xs font-mono font-bold uppercase rounded-xl tracking-wider transition-all duration-300 hover:shadow-[0_0_20px_rgba(229,255,69,0.12)] cursor-pointer flex items-center gap-1.5"
+                        className="bg-slate-900 dark:bg-[#E5FF45] hover:bg-slate-800 dark:hover:bg-lime-350 text-white dark:text-black border border-slate-900 dark:border-[#E5FF45] px-5 py-3 text-xs font-mono font-bold uppercase rounded-xl tracking-wider transition-all duration-300 hover:shadow-md cursor-pointer flex items-center gap-1.5"
                       >
-                        <Bot size={13} />
-                        <span>Query Neural Copilot</span>
+                        <Bot size={13} className="text-lime-400 dark:text-slate-950" />
+                        <span>Talk with AI Agent</span>
                       </button>
                     </div>
                   </div>
@@ -325,24 +360,24 @@ export default function App() {
                     <form 
                       onSubmit={handleTransmitPayload}
                       id="contact-dispatch-deck" 
-                      className="bg-[#121212] border border-white/10 hover:border-[#E5FF45]/20 rounded-3xl p-6 md:p-8 space-y-4 shadow-2xl relative overflow-hidden backdrop-blur-md transition-all duration-300"
+                      className="bg-white dark:bg-[#121212] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 md:p-8 space-y-4 shadow-xl relative overflow-hidden transition-all duration-300"
                     >
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-[#E5FF45]/5 rounded-full blur-2xl pointer-events-none" />
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-lime-400/5 rounded-full blur-2xl pointer-events-none" />
                       
                       {/* Terminal header */}
-                      <div className="border-b border-white/10 pb-4">
-                        <span className="text-[10px] font-mono text-white/40 tracking-wider block uppercase">
-                          // SECURE PAYLOAD DISPATCH STATION
+                      <div className="border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 tracking-wider block uppercase font-bold">
+                          // LEAVE A MESSAGE
                         </span>
-                        <h3 className="text-xl font-display font-medium text-white mt-1">Direct Communication Hub</h3>
-                        <p className="text-xs font-mono text-[#E5FF45] mt-0.5">TARGET: mastan8957@gmail.com</p>
+                        <h3 className="text-xl font-display font-medium text-slate-900 dark:text-white mt-1">Direct Message Hub</h3>
+                        <p className="text-xs font-mono text-lime-700 dark:text-lime-400 mt-0.5">Email: mastan8957@gmail.com</p>
                       </div>
 
                       {/* Inputs */}
                       <div className="space-y-3 pt-2">
                         <div>
-                          <label className="block text-[9px] font-mono text-white/40 uppercase mb-1">
-                            Sender Identification (Your Name)
+                          <label className="block text-[9px] font-mono text-slate-500 dark:text-slate-400 uppercase mb-1 font-bold">
+                            Your Name
                           </label>
                           <input
                             type="text"
@@ -350,13 +385,13 @@ export default function App() {
                             value={senderName}
                             onChange={(e) => setSenderName(e.target.value)}
                             placeholder="Enter Name..."
-                            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/20 focus:outline-none focus:border-[#E5FF45]/50 focus:ring-1 focus:ring-[#E5FF45]/20 font-mono"
+                            className="w-full bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-lime-500 dark:focus:border-lime-400 focus:ring-1 focus:ring-lime-500/20 font-mono"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[9px] font-mono text-white/40 uppercase mb-1">
-                            Sender Pathway (Your Email)
+                          <label className="block text-[9px] font-mono text-slate-500 dark:text-slate-400 uppercase mb-1 font-bold">
+                            Your Email
                           </label>
                           <input
                             type="email"
@@ -364,37 +399,37 @@ export default function App() {
                             value={senderEmail}
                             onChange={(e) => setSenderEmail(e.target.value)}
                             placeholder="Enter Email Address..."
-                            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/20 focus:outline-none focus:border-[#E5FF45]/50 focus:ring-1 focus:ring-[#E5FF45]/20 font-mono"
+                            className="w-full bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-lime-500 dark:focus:border-lime-400 focus:ring-1 focus:ring-lime-500/20 font-mono"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-[9px] font-mono text-white/40 uppercase mb-1">
-                            Transmission Subject
+                          <label className="block text-[9px] font-mono text-slate-500 dark:text-slate-400 uppercase mb-1 font-bold">
+                            Subject
                           </label>
                           <select
                             value={messageSubject}
                             onChange={(e) => setMessageSubject(e.target.value)}
-                            className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#E5FF45]/50 focus:ring-1 focus:ring-[#E5FF45]/20 font-mono cursor-pointer"
+                            className="w-full bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-lime-500 dark:focus:border-lime-400 focus:ring-1 focus:ring-lime-500/20 font-mono cursor-pointer"
                           >
-                            <option value="System Collaboration">System Collaboration</option>
-                            <option value="Hiring / Recruitment">Hiring / Recruitment</option>
-                            <option value="Technical Consultation">Technical Consultation</option>
-                            <option value="AI Integration Handshake">AI Integration Handshake</option>
+                            <option value="Collaboration">Collaboration</option>
+                            <option value="Hiring / Job Opening">Hiring / Job Opening</option>
+                            <option value="Technical Consulting">Technical Consulting</option>
+                            <option value="General Inquiry">General Inquiry</option>
                           </select>
                         </div>
 
                         <div>
-                          <label className="block text-[9px] font-mono text-white/40 uppercase mb-1">
-                            Payload Content (Your Message)
+                          <label className="block text-[9px] font-mono text-slate-500 dark:text-slate-400 uppercase mb-1 font-bold">
+                            Your Message
                           </label>
                           <textarea
                             required
                             rows={3}
                             value={messageText}
                             onChange={(e) => setMessageText(e.target.value)}
-                            placeholder="Type secure message details..."
-                            className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-white/20 focus:outline-none focus:border-[#E5FF45]/50 focus:ring-1 focus:ring-[#E5FF45]/20 font-sans resize-none"
+                            placeholder="Type direct message details..."
+                            className="w-full bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-lime-500 dark:focus:border-lime-400 focus:ring-1 focus:ring-lime-500/20 font-sans resize-none"
                           />
                         </div>
                       </div>
@@ -404,36 +439,36 @@ export default function App() {
                         <button
                           type="submit"
                           disabled={isTransmitting || !senderName || !senderEmail || !messageText}
-                          className="w-full bg-[#E5FF45] hover:bg-[#d4f036] text-black disabled:opacity-40 font-mono text-xs font-semibold uppercase tracking-wider py-3 rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#E5FF45]/10"
+                          className="w-full bg-slate-900 hover:bg-slate-800 dark:bg-[#E5FF45] dark:hover:bg-lime-300 text-white dark:text-black disabled:opacity-40 font-mono text-xs font-semibold uppercase tracking-wider py-3 rounded-xl transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-md"
                         >
                           {isTransmitting ? (
                             <>
-                              <Loader2 size={13} className="animate-spin" />
-                              <span>Compiling Payload...</span>
+                              <Loader2 size={13} className="animate-spin text-lime-400 dark:text-slate-950" />
+                              <span>Sending Message...</span>
                             </>
                           ) : (
-                            <span>Transmit Secured Message</span>
+                            <span>Send Message</span>
                           )}
                         </button>
                       </div>
 
                       {/* User success UI feedback inside the card */}
                       {transmittedSuccessfully && (
-                        <div className="mt-2 p-3 bg-[#E5FF45]/10 border border-[#E5FF45]/20 rounded-xl text-center text-[11px] text-[#E5FF45] font-mono animate-fade-in">
+                        <div className="mt-2 p-3 bg-lime-500/10 border border-lime-500/20 rounded-xl text-center text-[11px] text-lime-800 font-mono animate-fade-in">
                           📡 Secure payload compiled! Opening default mail client...
                         </div>
                       )}
 
                       {/* Code platforms quick triggers */}
-                      <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-2.5">
-                        <span className="text-[9px] font-mono text-white/30 tracking-widest uppercase">// CHANNELS:</span>
+                      <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2.5">
+                        <span className="text-[9px] font-mono text-slate-400 dark:text-slate-500 tracking-widest uppercase font-bold">// SOCIALS:</span>
                         <div className="flex items-center gap-2">
                           <a
                             id="quick-link-github"
                             href={ShaikProfile.github}
                             target="_blank"
                             rel="noreferrer"
-                            className="p-2 bg-black/40 hover:bg-white/5 border border-white/5 hover:border-[#E5FF45]/20 rounded-lg text-white/55 hover:text-[#E5FF45] transition-all"
+                            className="p-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E5FF45] transition-all shadow-2xs"
                             title="GitHub"
                           >
                             <Github size={13} />
@@ -443,7 +478,7 @@ export default function App() {
                             href={ShaikProfile.linkedin}
                             target="_blank"
                             rel="noreferrer"
-                            className="p-2 bg-black/40 hover:bg-white/5 border border-white/5 hover:border-[#E5FF45]/20 rounded-lg text-white/55 hover:text-[#E5FF45] transition-all"
+                            className="p-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E5FF45] transition-all shadow-2xs"
                             title="LinkedIn"
                           >
                             <Linkedin size={13} />
@@ -453,7 +488,7 @@ export default function App() {
                             href={ShaikProfile.codechef}
                             target="_blank"
                             rel="noreferrer"
-                            className="p-2 bg-black/40 hover:bg-white/5 border border-white/5 hover:border-[#E5FF45]/20 rounded-lg text-white/55 hover:text-[#E5FF45] transition-all"
+                            className="p-2 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-[#E5FF45] transition-all shadow-2xs"
                             title="CodeChef"
                           >
                             <Code2 size={13} />
@@ -467,22 +502,22 @@ export default function App() {
                 </section>
 
                 {/* HIGHLIGHTED STATS OR COMPREHENSIVE SUB-ROWS */}
-                <section id="academic-milestones" className="bg-[#080808] py-10 px-4 md:px-8 max-w-7xl mx-auto border-t border-b border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <section id="academic-milestones" className="bg-white/85 dark:bg-[#121212]/85 py-10 px-4 md:px-8 max-w-7xl mx-auto border-t border-b border-slate-200 dark:border-slate-800 grid grid-cols-2 lg:grid-cols-4 gap-6 rounded-2xl shadow-sm mb-8 transition-colors duration-300">
                   <div className="text-center md:text-left">
-                    <span className="block text-[10px] font-mono text-white/40 uppercase tracking-widest">// AWS CERTIFICATION</span>
-                    <span className="block text-lg font-display font-bold text-white mt-1 uppercase">Cloud Practitioner</span>
+                    <span className="block text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest font-semibold">// CLOUD FOCUS</span>
+                    <span className="block text-lg font-display font-bold text-slate-800 dark:text-slate-200 mt-1 uppercase">Cloud Practitioner</span>
                   </div>
                   <div className="text-center md:text-left">
-                    <span className="block text-[10px] font-mono text-white/40 uppercase tracking-widest">// ORACLE CLOUD</span>
-                    <span className="block text-lg font-display font-bold text-[#E5FF45] mt-1 uppercase">GenAI Specialist</span>
+                    <span className="block text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest font-semibold">// AI FOCUS</span>
+                    <span className="block text-lg font-display font-bold text-lime-700 dark:text-[#E5FF45] mt-1 uppercase">GenAI Specialist</span>
                   </div>
                   <div className="text-center md:text-left">
-                    <span className="block text-[10px] font-mono text-white/40 uppercase tracking-widest">// PROFESSIONAL EXPERIENCE</span>
-                    <span className="block text-lg font-display font-bold text-white mt-1 uppercase">Calibo AI Intern</span>
+                    <span className="block text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest font-semibold">// WORK HISTORY</span>
+                    <span className="block text-lg font-display font-bold text-slate-800 dark:text-slate-200 mt-1 uppercase">Calibo AI Intern</span>
                   </div>
                   <div className="text-center md:text-left">
-                    <span className="block text-[10px] font-mono text-white/40 uppercase tracking-widest">// ARCHITECTURE DESIGN</span>
-                    <span className="block text-lg font-display font-bold text-[#E5FF45] mt-1 uppercase">High Utility Systems</span>
+                    <span className="block text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase tracking-widest font-semibold">// CODE FOCUS</span>
+                    <span className="block text-lg font-display font-bold text-lime-700 dark:text-[#E5FF45] mt-1 uppercase">Full-Stack Systems</span>
                   </div>
                 </section>
 
@@ -494,9 +529,9 @@ export default function App() {
                   <button
                     id="cta-full-timeline"
                     onClick={() => setActiveTab("timeline")}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#121212] hover:bg-white/5 border border-white/10 text-xs font-mono text-white/60 hover:text-[#E5FF45] rounded-lg uppercase tracking-wider transition-all duration-300 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white dark:bg-[#121212] hover:bg-slate-50 dark:hover:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-lime-700 dark:hover:text-[#E5FF45] rounded-lg uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-xs"
                   >
-                    <span>Inspect Professional Timeline & Path</span>
+                    <span>View Full Timeline</span>
                     <ChevronRight size={14} />
                   </button>
                 </div>
@@ -534,13 +569,13 @@ export default function App() {
       </main>
 
       {/* FOOTER WIDGET */}
-      <footer id="app-footer" className="py-12 border-t border-white/10 bg-[#080808] text-white/40 text-center text-xs font-mono mt-10">
+      <footer id="app-footer" className="py-12 border-t border-slate-800 dark:border-slate-900 bg-slate-950 text-slate-400 text-center text-xs font-mono mt-10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 Shaik Mastan Saheb. Powered securely under premium high utility architecture.</p>
-          <div className="flex items-center gap-4">
-            <a href={`mailto:${ShaikProfile.email}`} className="hover:text-[#E5FF45] transition-colors cursor-pointer text-[10px] uppercase tracking-wide">Email Shaik</a>
+          <p className="text-slate-400">© 2026 Shaik Mastan Saheb. Designed with simple, reliable standards.</p>
+          <div className="flex items-center gap-4 text-slate-400">
+            <a href={`mailto:${ShaikProfile.email}`} className="hover:text-lime-400 transition-colors cursor-pointer text-[10px] uppercase tracking-wide">Email Shaik</a>
             <span>•</span>
-            <a href={ShaikProfile.github} target="_blank" rel="noreferrer" className="hover:text-[#E5FF45] transition-colors cursor-pointer text-[10px] uppercase tracking-wide">GitHub Codebase</a>
+            <a href={ShaikProfile.github} target="_blank" rel="noreferrer" className="hover:text-lime-400 transition-colors cursor-pointer text-[10px] uppercase tracking-wide">GitHub Profile</a>
           </div>
         </div>
       </footer>

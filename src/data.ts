@@ -2,14 +2,14 @@ import { Project, Experience, Education, SkillCategory, Certification, Achieveme
 
 export const ShaikProfile = {
   name: "Shaik Mastan Saheb",
-  title: "Agentic AI & Full-Stack Developer",
+  title: "Full-Stack Web & AI Developer",
   location: "Tiruvuru, Andhra Pradesh, India",
   email: "mastan8957@gmail.com",
   phone: "9494909195",
   linkedin: "https://www.linkedin.com/in/shaikmastansaheb/",
   github: "https://github.com/mastan8444",
   codechef: "https://www.codechef.com/users/mastan8957",
-  summary: "Motivated Computer Science student specializing in Machine Learning and Agentic AI. Hands-on experience architecting full-stack systems with FastAPI and React, deploying robust cloud backends, and crafting intelligent presentation, automation, and conversational AI agents."
+  summary: "Hi! I'm a Computer Science student at KL University who loves building helpful AI agents and full-stack web applications. I design practical, simple software to automate daily tasks, speed up document generation, and make technology approachable."
 };
 
 export const ProjectsData: Project[] = [
@@ -33,6 +33,29 @@ export const ProjectsData: Project[] = [
       { label: "Assembly Speedup", value: "5x Faster" },
       { label: "Manual Effort Saved", value: "80%" },
       { label: "Successful Generations", value: "10K+" }
+    ]
+  },
+  {
+    id: "iris-ml",
+    title: "Iris ML API Deployment",
+    period: "2026",
+    role: "ML Engineer & Deployment Lead",
+    description: "A Machine Learning API built with FastAPI and Scikit-learn targeting Iris flower species classification. Containerized via Docker and deployed dynamically in production on Azure Container Apps.",
+    bullets: [
+      "Built and deployed a Machine Learning API using FastAPI and Scikit-learn to predict Iris flower species.",
+      "Containerized the application using Docker and implemented cloud deployment workflows with secure registers.",
+      "Deployed the application using Azure Container Registry (ACR) and Azure Container Apps with automated pipelines.",
+      "Developed RESTful endpoints for prediction and health monitoring, enabling scalable, low-latency ML model serving."
+    ],
+    tags: ["Machine Learning", "FastAPI", "Scikit-Learn", "Docker", "Azure ACA", "Azure ACR", "APIs"],
+    category: "AI",
+    github: "https://github.com/mastan8444",
+    demo: "https://iris-deploy-mastan.onrender.com/docs",
+    caseStudyId: "iris-ml-deployment",
+    metrics: [
+      { label: "Endpoint Latency", value: "<15ms" },
+      { label: "Client Speedup", value: "8x Faster" },
+      { label: "Model Response", value: "100% OK" }
     ]
   },
   {
@@ -96,6 +119,8 @@ export const EducationData: Education[] = [
     institution: "KL University, Vijayawada",
     degree: "B.Tech in Computer Science and Engineering (Machine Learning)",
     period: "2024 – 2027",
+    score: "9.6 / 10",
+    scoreLabel: "CGPA",
     details: "Key coursework: Machine Learning, Advanced Data Structures, Neural Networks, Agentic LLM Architectures, DBMS, OOP."
   },
   {
@@ -103,6 +128,8 @@ export const EducationData: Education[] = [
     institution: "AANM & VVRSR Polytechnic, Gudlavalleru",
     degree: "Diploma in Computer Science & Engineering",
     period: "2021 – 2024",
+    score: "92%",
+    scoreLabel: "Percentage",
     details: "Acquired deep fundamentals in Core CS, including Operating Systems, Data Structures, Algorithms, Object-Oriented Programming, and database management systems."
   },
   {
@@ -110,6 +137,8 @@ export const EducationData: Education[] = [
     institution: "Sri Chaitanya High School, Tiruvuru",
     degree: "Secondary School Education (SSC Class X)",
     period: "2021",
+    score: "98%",
+    scoreLabel: "Percentage",
     details: "Outstanding academic record with emphasis on Mathematics, Science, and Logical reasoning."
   }
 ];
@@ -169,6 +198,11 @@ export const SkillsData: SkillCategory[] = [
 
 export const CertificationsData: Certification[] = [
   {
+    name: "AWS Certified Machine Learning Engineer – Associate",
+    issuer: "Amazon Web Services (AWS)",
+    year: "2025"
+  },
+  {
     name: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services (AWS)",
     year: "2024"
@@ -177,6 +211,11 @@ export const CertificationsData: Certification[] = [
     name: "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional",
     issuer: "Oracle University",
     year: "2025"
+  },
+  {
+    name: "MongoDB Associate Database Administrator",
+    issuer: "MongoDB Inc.",
+    year: "2024"
   },
   {
     name: "Software Engineer Certification",
@@ -189,6 +228,10 @@ export const AchievementsData: Achievement[] = [
   {
     text: "Awarded Merit Scholarship at KL University",
     subtext: "Secured for exceptional academic performance in Machine Learning B.Tech streams."
+  },
+  {
+    text: "Secured AP ECET 127th Rank in AP ECET 2024",
+    subtext: "Achieved the prestigious 127th Rank state-wide among tens of thousands of Computer Science aspirants."
   },
   {
     text: "OCI 2025 Certified Generative AI Professional",
@@ -239,6 +282,45 @@ export const CaseStudiesData: CaseStudy[] = [
       { title: "Error Rate Reduction", desc: "Automated template alignment prevented layout glitches completely.", value: "0% Visual Outlays" }
     ],
     technologiesUsed: ["Python 3.11", "FastAPI", "model-context-protocol", "python-pptx", "LLM APIs", "Docker"]
+  },
+  {
+    id: "iris-ml-deployment",
+    title: "Iris ML API Deployment",
+    subtitle: "High-performance containerized Machine Learning prediction API served on cloud-native Azure infrastructure.",
+    problem: "Data science notebooks often lock models inside offline environments, making them unusable for actual software services. Traditional deployment servers demand expensive infrastructure configurations, lacking automated deployment pipelines, real-time health checks, or container isolation.",
+    solution: "We serialized a Scikit-learn trained Iris classification model and built a reactive, type-safe FastAPI prediction endpoint. Designed a Docker production configuration to isolate environment dependencies, hosted the image on Azure Container Registry (ACR), and launched it on scalable Azure Container Apps with custom docs.",
+    architecture: {
+      nodes: [
+        { id: "client-request", label: "Client App", role: "Triggers model predictions via structured POST requests with flower dimensions.", type: "client" },
+        { id: "azure-aca", label: "Azure Container Apps", role: "Hosts the isolated Docker workspace, scales dynamically, and routes web triggers.", type: "api" },
+        { id: "fastapi-endpoint", label: "FastAPI predict API", role: "Deserializes ML pickle model, runs vectorized inference, and serves health check metrics.", type: "server" },
+        { id: "model-storage", label: "Model Pickled State", role: "Pre-trained SVM/Tree classifier weights kept in binary cache for rapid zero-io loads.", type: "storage" }
+      ],
+      connections: [
+        { from: "client-request", to: "azure-aca", label: "1. Structured JSON Post payload" },
+        { from: "azure-aca", to: "fastapi-endpoint", label: "2. Load-balance request thread" },
+        { from: "fastapi-endpoint", to: "model-storage", label: "3. Run prediction model weights" },
+        { from: "fastapi-endpoint", to: "client-request", label: "4. Return prediction result and accuracy scores" }
+      ]
+    },
+    keyChallenges: [
+      {
+        title: "Docker Image Bloat and Sizing",
+        desc: "Initially, standard Python images carrying science modules like NumPy, Pandas, and Scikit-learn exceeded 1.2GB, causing slow cold starts and high deployment cost structures.",
+        resolution: "Refactored the Dockerfile to compile under alpine-slim Python images. Multi-staged steps installed lightweight wheels and skipped heavy packages, shrinking the final production image to under 280MB."
+      },
+      {
+        title: "Platform Isolation and Latencies",
+        desc: "Hosting raw model objects inside generic API loops initially spiked prediction response times to 120ms due to recurring model loading overheads.",
+        resolution: "Engineered startup event lifespans inside FastAPI. Deserialized the Scikit-learn model once on app start, keeping it in memory for instant high-frequency prediction routes in <15ms."
+      }
+    ],
+    impact: [
+      { title: "Serving Efficiency", desc: "Prediction requests complete with sub-15ms processing.", value: "<15ms Latency" },
+      { title: "Container Size", desc: "Optimizations reduced image size by over 75% for extremely fast spins.", value: "280MB Base Image" },
+      { title: "Production Access", desc: "Deployed live with Swagger documentation interactive console.", value: "100% Swagger Active" }
+    ],
+    technologiesUsed: ["Python 3.10", "FastAPI", "Scikit-Learn", "Docker", "Azure Container Apps", "Azure Container Registry"]
   },
   {
     id: "fangs-portal",

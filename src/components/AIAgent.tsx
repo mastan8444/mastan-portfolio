@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Message } from "../types";
-import { Bot, User, Send, Sparkles, AlertCircle, HelpCircle, Loader2, RefreshCw } from "lucide-react";
+import { Bot, User, Send, Sparkles, AlertCircle, HelpCircle, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 const SYSTEM_WELCOME = `Hello! I am **Shaik's AI Copilot**, an agentic virtual assistant trained on Shaik Mastan Saheb's professional resume, project designs, and technical credentials. 
@@ -60,7 +60,7 @@ const getLocalResponse = (input: string): string => {
    
 3. **Sri Chaitanya High School, Tiruvuru** (Class X)`;
   }
-
+  
   if (query.includes("hacker") || query.includes("cert") || query.includes("aws") || query.includes("oracle")) {
     return `### Shaik's Certifications:
 - **AWS Certified Cloud Practitioner** (Amazon Web Services)
@@ -183,24 +183,23 @@ export default function AIAgent() {
       // headers
       if (line.startsWith("###")) {
         content = line.replace("###", "").trim();
-        lineClass = "text-base font-display font-semibold text-white mt-4 mb-2 first:mt-0";
+        lineClass = "text-base font-display font-bold text-slate-900 dark:text-white mt-4 mb-2 first:mt-0";
       } else if (line.startsWith("##")) {
         content = line.replace("##", "").trim();
-        lineClass = "text-lg font-display font-semibold text-white mt-4 mb-2 first:mt-0";
+        lineClass = "text-lg font-display font-bold text-slate-900 dark:text-white mt-4 mb-2 first:mt-0";
       } else if (line.startsWith("#")) {
         content = line.replace("#", "").trim();
-        lineClass = "text-xl font-display font-bold text-white mt-5 mb-2.5 first:mt-0";
+        lineClass = "text-xl font-display font-bold text-slate-950 dark:text-white mt-5 mb-2.5 first:mt-0";
       }
 
       // bullet parsing
       const isBullet = line.trim().startsWith("-") || line.trim().startsWith("*");
       if (isBullet) {
         content = line.replace(/^[-*]\s*/, "").trim();
-        lineClass = "pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-[#E5FF45] my-1 text-white/70";
+        lineClass = "pl-4 relative before:content-['•'] before:absolute before:left-0 before:text-lime-700 dark:before:text-lime-400 my-1 text-slate-600 dark:text-slate-300 font-light";
       }
 
       // Bold tag parser (**text**)
-      const boldRegex = /\*\*(.*?)\*\`/g; // Wait, let's keep the real regex search: /\*\*(.*?)\*\*/g
       const realBoldRegex = /\*\*(.*?)\*\*/g;
       const parts = [];
       let lastIdx = 0;
@@ -211,7 +210,7 @@ export default function AIAgent() {
           parts.push(content.substring(lastIdx, match.index));
         }
         parts.push(
-          <strong key={match.index} className="text-[#E5FF45] font-semibold">
+          <strong key={match.index} className="text-lime-800 dark:text-[#E5FF45] font-bold">
             {match[1]}
           </strong>
         );
@@ -222,7 +221,7 @@ export default function AIAgent() {
       }
 
       return (
-        <p key={lIdx} className={`text-white/80 text-sm leading-relaxed ${lineClass || "my-2"}`}>
+        <p key={lIdx} className={`text-slate-705 dark:text-slate-300 text-sm leading-relaxed ${lineClass || "my-2"}`}>
           {parts.length > 0 ? parts : content}
         </p>
       );
@@ -230,38 +229,38 @@ export default function AIAgent() {
   };
 
   return (
-    <section id="ai-agent" className="py-16 px-4 md:px-8 max-w-5xl mx-auto border-t border-white/10">
+    <section id="ai-agent" className="py-16 px-4 md:px-8 max-w-5xl mx-auto border-t border-slate-200 dark:border-slate-800">
       <div className="text-center mb-10">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#E5FF45]/10 text-[#E5FF45] text-xs font-mono rounded-full border border-[#E5FF45]/20 mb-3">
-          <Sparkles size={12} className="animate-pulse" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-lime-500/10 text-lime-700 text-xs font-mono rounded-full border border-lime-500/20 mb-3 font-bold select-none">
+          <Sparkles size={12} className="animate-pulse text-lime-600 animate-pulse" />
           Neural Synthesis
         </span>
-        <h2 className="text-3xl md:text-4xl font-display font-medium text-white tracking-tight">
+        <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-950 dark:text-white tracking-tight">
           Interact with Shaik&apos;s Virtual AI Agent
         </h2>
-        <p className="text-white/55 text-sm mt-2 max-w-lg mx-auto font-light">
+        <p className="text-slate-500 dark:text-slate-400 text-sm mt-2 max-w-lg mx-auto font-light leading-relaxed">
           An agentic model tuned on Shaik&apos;s certifications, codebases, and credentials. Put Shaik to the test or trigger mock interviews on-the-spot!
         </p>
       </div>
 
-      <div className="bg-[#121212] border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[600px] hover:border-[#E5FF45]/20 transition-all duration-300">
+      <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-xl flex flex-col h-[600px] hover:border-lime-500/25 dark:hover:border-lime-400/25 transition-all duration-300">
         {/* Info header bar */}
-        <div className="bg-[#0a0a0a] px-5 py-4 border-b border-white/10 flex items-center justify-between">
+        <div className="bg-slate-50 dark:bg-slate-900/60 px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#E5FF45]/10 border border-[#E5FF45]/20 rounded-lg text-[#E5FF45]">
+            <div className="p-2 bg-lime-500/10 border border-lime-500/20 rounded-lg text-lime-700 dark:text-[#E5FF45]">
               <Bot size={18} />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-white font-mono">virtual-shaik-copilot.sys</h3>
+              <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 font-mono">virtual-shaik-copilot.sys</h3>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-10px font-mono text-white/40">KNOWLEDGE ENGINES LOADED</span>
+                <span className="text-10px font-mono text-slate-400 font-semibold uppercase tracking-wider">// KNOWLEDGE ENGINES LOADED</span>
               </div>
             </div>
           </div>
           <button
             onClick={() => setApiKeyGuideOpen(!apiKeyGuideOpen)}
-            className="text-[11px] font-mono text-white/40 hover:text-[#E5FF45] flex items-center gap-1 transition-colors cursor-pointer"
+            className="text-[11px] font-mono text-slate-500 hover:text-lime-700 font-bold flex items-center gap-1 transition-colors cursor-pointer"
           >
             <HelpCircle size={14} />
             <span className="hidden sm:inline">API Setup Guide</span>
@@ -276,27 +275,25 @@ export default function AIAgent() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="bg-[#0d0d0d] border-b border-white/10 px-5 py-4 text-xs text-white/70 space-y-2 overflow-hidden shrink-0"
+              className="bg-lime-500/[0.03] border-b border-slate-200 px-5 py-4 text-xs text-slate-650 space-y-2 overflow-hidden shrink-0"
             >
-              <div className="flex items-center gap-2 text-[#E5FF45] font-semibold mb-1">
-                <AlertCircle size={14} />
+              <div className="flex items-center gap-2 text-lime-700 font-bold mb-1">
+                <AlertCircle size={14} className="text-lime-600" />
                 <span>Google GenAI Live Connection Guide</span>
               </div>
-              <p>
-                To power real-time AI reasoning via **Gemini 3.5 Flash**, this applet queries your Workspace secrets securely:
+              <p className="leading-relaxed">
+                To power real-time AI reasoning via **Gemini 2.5 Flash**, this applet queries your Workspace secrets securely:
               </p>
-              <ol className="list-decimal pl-4 space-y-1 font-sans font-light">
+              <ol className="list-decimal pl-4 space-y-1 font-sans font-light leading-normal">
                 <li>Click the **Settings** menu at the top-right of your AI Studio screen.</li>
                 <li>Open the **Secrets** panel.</li>
-                <li>Create or paste a secret named <code className="bg-black border border-white/10 px-1.5 py-0.5 text-[#E5FF45] font-mono text-[11px] rounded font-semibold">GEMINI_API_KEY</code> with your Gemini Token key from Google AI Studio.</li>
+                <li>Create or paste a secret named <code className="bg-slate-150 border border-slate-250 px-1.5 py-0.5 text-lime-700 font-mono text-[11px] rounded font-bold">GEMINI_API_KEY</code> with your Gemini Token key from Google AI Studio.</li>
                 <li>Refresh the dev frame in your browser to let the full-stack server establish the live connection! Ready</li>
               </ol>
             </motion.div>
           )}
-        </AnimatePresence>
-
-        {/* Messages viewport */}
-        <div id="ai-chat-viewport" className="flex-grow p-5 md:p-6 overflow-y-auto space-y-5 bg-grid bg-black/30">
+        </AnimatePresence>        {/* Messages viewport */}
+        <div id="ai-chat-viewport" className="flex-grow p-4 md:p-6 overflow-y-auto space-y-5 bg-slate-50/50 dark:bg-slate-900/10">
           <AnimatePresence initial={false}>
             {messages.map((msg, idx) => (
               <motion.div
@@ -309,22 +306,22 @@ export default function AIAgent() {
                 <div
                   className={`p-2 rounded-xl shrink-0 h-fit border ${
                     msg.role === "user"
-                      ? "bg-[#E5FF45]/10 text-[#E5FF45] border-[#E5FF45]/20"
-                      : "bg-white/5 text-white/70 border border-white/10"
+                      ? "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700"
+                      : "bg-lime-500/10 dark:bg-lime-400/5 text-lime-700 dark:text-[#E5FF45] border-lime-500/20 dark:border-lime-400/15"
                   }`}
                 >
                   {msg.role === "user" ? <User size={16} /> : <Bot size={16} />}
                 </div>
 
                 <div
-                  className={`rounded-2xl p-4 border ${
+                  className={`rounded-2xl p-4 border shadow-sm ${
                     msg.role === "user"
-                      ? "bg-[#E5FF45]/5 border-[#E5FF45]/25 text-white"
-                      : "bg-black/45 border-white/5 text-white/90"
+                      ? "bg-slate-100/50 dark:bg-slate-850/40 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100"
+                      : "bg-white dark:bg-[#161616] border-slate-150 dark:border-slate-800 text-slate-800 dark:text-slate-100"
                   }`}
                 >
                   <div className="space-y-1.5">{renderFormattedText(msg.text)}</div>
-                  <span className="block text-[9px] font-mono text-white/40 mt-2 text-right">
+                  <span className="block text-[9px] font-mono text-slate-400 dark:text-slate-500 mt-2 text-right font-semibold select-none">
                     {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
@@ -337,12 +334,12 @@ export default function AIAgent() {
                 animate={{ opacity: 1 }}
                 className="flex gap-3.5 mr-auto max-w-[80%]"
               >
-                <div className="p-2 rounded-xl shrink-0 bg-white/5 border border-white/10 text-white/55">
+                <div className="p-2 rounded-xl shrink-0 bg-lime-500/10 dark:bg-lime-400/5 border border-lime-500/20 dark:border-lime-400/10 text-lime-700 dark:text-[#E5FF45]">
                   <Bot size={16} />
                 </div>
-                <div className="rounded-2xl p-4 bg-black/45 border border-white/5 flex items-center gap-3">
-                  <Loader2 size={14} className="text-[#E5FF45] animate-spin" />
-                  <span className="text-xs font-mono text-white/40">Computing AI representative response...</span>
+                <div className="rounded-2xl p-4 bg-white dark:bg-[#161616] border border-slate-150 dark:border-slate-800 flex items-center gap-3 shadow-xs">
+                  <Loader2 size={14} className="text-lime-605 dark:text-lime-404 animate-spin" />
+                  <span className="text-xs font-mono text-slate-450 dark:text-slate-500 font-bold">Computing AI representative response...</span>
                 </div>
               </motion.div>
             )}
@@ -351,14 +348,14 @@ export default function AIAgent() {
         </div>
 
         {/* Suggested prompts footer */}
-        <div className="px-5 py-3 bg-[#0a0a0a] border-t border-white/10 overflow-x-auto whitespace-nowrap flex items-center gap-1.5 shrink-0 scrollbar-none">
-          <span className="text-[10px] font-mono text-white/40 uppercase mr-1 inline-block">// Suggested:</span>
+        <div className="px-5 py-3 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 overflow-x-auto whitespace-nowrap flex items-center gap-1.5 shrink-0 scrollbar-none">
+          <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 uppercase mr-1 inline-block font-bold select-none">// Suggested:</span>
           {QUICK_PROMPTS.map((prompt, idx) => (
             <button
               key={idx}
               id={`quick-prompt-btn-${idx}`}
               onClick={() => handleSend(prompt)}
-              className="px-3 py-1 bg-black/35 hover:bg-[#E5FF45]/10 border border-white/5 hover:border-[#E5FF45]/25 rounded-lg text-white/70 hover:text-[#E5FF45] text-xs font-medium font-sans inline-block transition-all duration-200 cursor-pointer text-ellipsis overflow-hidden"
+              className="px-3 py-1 bg-white dark:bg-slate-850 hover:bg-lime-500/5 dark:hover:bg-lime-400/5 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-650 dark:text-slate-350 hover:text-lime-800 dark:hover:text-[#E5FF45] text-xs font-semibold inline-block transition-all duration-200 cursor-pointer shadow-3xs"
             >
               {prompt}
             </button>
@@ -371,7 +368,7 @@ export default function AIAgent() {
             e.preventDefault();
             handleSend(inputValue);
           }}
-          className="p-4 bg-[#0a0a0a] border-t border-white/10 flex gap-3 shrink-0"
+          className="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 flex gap-3 shrink-0"
         >
           <input
             id="ai-agent-chat-input"
@@ -379,14 +376,14 @@ export default function AIAgent() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Ask Shaik's AI Copilot anything about his technical credentials..."
-            className="flex-grow bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#E5FF45]/50 focus:ring-1 focus:ring-[#E5FF45]/20 font-sans"
+            className="flex-grow bg-white dark:bg-slate-850 border border-slate-250 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-lime-500 dark:focus:border-lime-400 focus:ring-1 focus:ring-lime-500/20 dark:focus:ring-lime-400/20 font-sans"
             disabled={isSending}
           />
           <button
             id="ai-agent-submit"
             type="submit"
             disabled={!inputValue.trim() || isSending}
-            className="bg-[#E5FF45]/10 hover:bg-[#E5FF45] text-[#E5FF45] hover:text-black border border-[#E5FF45]/20 hover:border-transparent rounded-xl px-5 py-2.5 text-xs font-mono font-semibold transition-all duration-300 flex items-center gap-1.5 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="bg-slate-900 dark:bg-[#E5FF45] hover:bg-slate-800 dark:hover:bg-[#E5FF45]/90 text-white dark:text-black border border-slate-900 dark:border-[#E5FF45] rounded-xl px-5 py-2.5 text-xs font-mono font-bold transition-all duration-300 flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
           >
             <span>Transmit</span>
             <Send size={12} />

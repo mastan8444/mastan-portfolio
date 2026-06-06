@@ -216,6 +216,82 @@ function ProjectGallery({ projectId }: { projectId: string }) {
           </div>
         )
       }
+    ],
+    "iris-ml": [
+      {
+        title: "Model Prediction Endpoint",
+        subtitle: "Mock UI displaying real-time prediction payload structures",
+        badge: "SWAGGER API DOCS",
+        node: (
+          <div className="h-full flex flex-col justify-between font-mono text-[9px] text-slate-700 dark:text-slate-300">
+            <div className="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-1 text-slate-400">
+              <span className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded">POST</span>
+              <span>/api/predict</span>
+            </div>
+            
+            <div className="p-2 bg-slate-900 border border-slate-800 rounded text-slate-200 mt-2 text-[8px] leading-relaxed select-all">
+              {"{ \"sepal_length\": 5.1, \"sepal_width\": 3.5, \"petal_length\": 1.4, \"petal_width\": 0.2 }"}
+            </div>
+
+            <div className="flex items-center gap-2 text-emerald-500 font-bold mt-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Response 200 OK: {"{ \"species\": \"Iris Setosa\", \"probability\": 0.985 }"}</span>
+            </div>
+          </div>
+        )
+      },
+      {
+        title: "Docker Container Structure",
+        subtitle: "How Scikit-learn and FastAPI are compiled inside compact alpine steps",
+        badge: "DOCKER MULTI-STAGE",
+        node: (
+          <div className="h-full flex flex-col justify-center space-y-2 font-mono text-[9px] leading-relaxed">
+            <div className="flex items-center gap-2">
+              <div className="px-1.5 py-0.5 bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold rounded">STAGE 1</div>
+              <span className="text-slate-600 dark:text-slate-400">FROM python:3.10-slim AS builder</span>
+            </div>
+            <div className="pl-4 text-slate-400 dark:text-slate-500 text-[8px]">
+              • pip install --user fastapi scikit-learn uvicorn numpy
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded">STAGE 2</div>
+              <span className="text-slate-600 dark:text-slate-400">FROM alpine:latest (Only copy wheels)</span>
+            </div>
+            <div className="pl-4 text-[#b8d600] font-bold text-[8.5px]">
+              ✔ Production Image Size: 280MB instead of 1.2GB!
+            </div>
+          </div>
+        )
+      },
+      {
+        title: "Azure Container Cloud Routing",
+        subtitle: "Serving direct cloud model queries with dynamic scaling logs",
+        badge: "AZURE ARCHITECTURE",
+        node: (
+          <div className="h-full flex flex-col justify-between">
+            <div className="flex justify-between items-center bg-slate-100 dark:bg-slate-900/60 p-2 border border-black/5 dark:border-white/5 rounded-lg font-mono text-[9px]">
+              <span className="text-slate-500">// ACA CLUSTER SECURE REGISTRY</span>
+              <span className="px-2 py-0.5 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full text-[8px] font-bold">HEALTHY</span>
+            </div>
+
+            <div className="flex items-center justify-around py-2.5">
+              <div className="text-center">
+                <span className="block text-slate-400 text-[7px] uppercase">Azure ACR</span>
+                <span className="text-[10px] font-bold font-mono text-slate-700 dark:text-slate-300">Docker Image</span>
+              </div>
+              <span className="text-[#E5FF45] font-extrabold text-[12px]">➔</span>
+              <div className="text-center">
+                <span className="block text-slate-400 text-[7px] uppercase">FastAPI (ACA)</span>
+                <span className="text-[10px] font-bold font-mono text-[#b8d600]">Live Endpoint</span>
+              </div>
+            </div>
+
+            <div className="text-[7.5px] font-mono text-slate-400 dark:text-slate-500 text-center">
+              Active serving: https://iris-deploy-mastan.onrender.com/docs
+            </div>
+          </div>
+        )
+      }
     ]
   };
 
@@ -234,40 +310,40 @@ function ProjectGallery({ projectId }: { projectId: string }) {
   const currentSlide = projectSlides[slideIdx];
 
   return (
-    <div id={`carousel-${projectId}`} className="w-full bg-[#181818] border border-white/10 rounded-2xl p-4 mb-6 shadow-md select-none relative group/carousel transition-all">
+    <div id={`carousel-${projectId}`} className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-6 shadow-md select-none relative group/carousel transition-all">
       <div className="flex justify-between items-start mb-3 gap-4">
         <div>
-          <span className="text-[8px] font-mono text-[#E5FF45] tracking-wider uppercase bg-[#E5FF45]/15 border border-[#E5FF45]/20 px-2 py-0.5 rounded-full font-bold">
+          <span className="text-[8px] font-mono text-lime-400 tracking-wider uppercase bg-lime-400/10 border border-lime-400/20 px-2 py-0.5 rounded-full font-bold">
             {currentSlide.badge}
           </span>
-          <h4 className="text-xs font-semibold text-white font-display mt-2">
+          <h4 className="text-xs font-semibold text-slate-100 font-display mt-2">
             {currentSlide.title}
           </h4>
-          <p className="text-[9px] text-white/40 mt-0.5">
+          <p className="text-[9px] text-slate-400 mt-0.5">
             {currentSlide.subtitle}
           </p>
         </div>
 
         {/* Slide Counter info */}
-        <span className="text-[9px] font-mono text-white/30 shrink-0 select-none pt-0.5">
+        <span className="text-[9px] font-mono text-slate-500 shrink-0 select-none pt-0.5 font-semibold">
           {slideIdx + 1} / {projectSlides.length}
         </span>
       </div>
 
       {/* RENDER DYNAMIC COMPONENT PANEL CANVAS */}
-      <div className="h-[148px] bg-[#0c0c0c] border border-white/5 rounded-xl p-3 flex flex-col justify-center relative overflow-hidden transition-all duration-300">
+      <div className="h-[148px] bg-slate-950 border border-slate-900 rounded-xl p-3 flex flex-col justify-center relative overflow-hidden transition-all duration-300">
         {currentSlide.node}
       </div>
 
       {/* Indicators tray */}
-      <div className="flex items-center justify-between mt-3.5 pt-1 border-t border-white/5">
+      <div className="flex items-center justify-between mt-3.5 pt-1 border-t border-slate-800">
         <div className="flex gap-1">
           {projectSlides.map((_, i) => (
             <button
               key={i}
               onClick={() => setSlideIdx(i)}
               className={`h-1 cursor-pointer transition-all duration-300 rounded-full ${
-                i === slideIdx ? "w-5 bg-[#E5FF45]" : "w-1.5 bg-white/10 hover:bg-white/20"
+                i === slideIdx ? "w-5 bg-lime-400" : "w-1.5 bg-slate-700 hover:bg-slate-600"
               }`}
               title={`Jump to Slide ${i + 1}`}
             />
@@ -277,14 +353,14 @@ function ProjectGallery({ projectId }: { projectId: string }) {
         <div className="flex items-center gap-1.5">
           <button
             onClick={handlePrev}
-            className="p-1 bg-black/40 border border-white/10 hover:border-[#E5FF45]/30 rounded text-white/60 hover:text-white transition-all cursor-pointer"
+            className="p-1 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded text-slate-400 hover:text-white transition-all cursor-pointer"
             title="Previous Visual Mock"
           >
             <ChevronLeft size={13} />
           </button>
           <button
             onClick={handleNext}
-            className="p-1 bg-black/40 border border-white/10 hover:border-[#E5FF45]/30 rounded text-white/60 hover:text-[#E5FF45] transition-all cursor-pointer"
+            className="p-1 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded text-slate-400 hover:text-white transition-all cursor-pointer"
             title="Next Visual Mock"
           >
             <ChevronRight size={13} />
@@ -303,31 +379,31 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
   );
 
   return (
-    <section id="projects" className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-white/10">
+    <section id="projects" className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-slate-200 dark:border-slate-800">
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
         <div>
-          <span className="text-xs font-mono text-[#E5FF45] tracking-wider uppercase font-semibold">
+          <span className="text-xs font-mono text-lime-700 dark:text-lime-400 tracking-wider uppercase font-extrabold block">
             // Showcase
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-medium text-white tracking-tight mt-1">
+          <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white tracking-tight mt-1">
             Featured Interlock Systems
           </h2>
-          <p className="text-white/55 text-sm mt-1.5 max-w-lg">
+          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5 max-w-lg">
             High-efficiency architectures built manually focusing on modern layout speedups, automation logic, and UI design.
           </p>
         </div>
 
         {/* Filter Categories */}
-        <div id="projects-filter-chips" className="flex items-center gap-1.5 p-1 bg-[#121212] border border-white/10 rounded-lg self-start">
+        <div id="projects-filter-chips" className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-905 border border-slate-200 dark:border-slate-800 rounded-lg self-start">
           {(["All", "AI", "Web"] as const).map((cat) => (
             <button
               key={cat}
               id={`filter-${cat}`}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 text-xs font-mono rounded-md uppercase tracking-wider transition-all duration-300 ${
+              className={`px-4 py-1.5 text-xs font-mono rounded-md uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                 filter === cat
-                  ? "bg-[#E5FF45]/15 text-[#E5FF45] border border-[#E5FF45]/25"
-                  : "text-white/50 hover:text-white border border-transparent"
+                  ? "bg-slate-900 dark:bg-[#E5FF45] text-white dark:text-black font-semibold"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-transparent"
               }`}
             >
               {cat === "All" ? "All Systems" : cat === "AI" ? "AI & Agents" : "Web & Portal"}
@@ -341,7 +417,7 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
           <div
             key={project.id}
             id={`project-card-${project.id}`}
-            className="flex flex-col bg-[#121212] border border-white/10 hover:border-[#E5FF45]/30 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:bg-[#121212]/95 shadow-xl group hover:shadow-2xl"
+            className="flex flex-col bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 hover:border-lime-500/40 dark:hover:border-lime-400/40 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-sm group hover:shadow-md"
           >
             {/* Header */}
             <div className="flex justify-between items-start mb-6">
@@ -350,28 +426,28 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
                   id={`project-icon-${project.id}`}
                   className={`p-2.5 rounded-xl border ${
                     project.category === "AI"
-                      ? "bg-[#E5FF45]/10 text-[#E5FF45] border-[#E5FF45]/20"
-                      : "bg-white/5 text-white border-white/10"
+                      ? "bg-lime-500/10 dark:bg-lime-404/5 text-lime-700 dark:text-[#E5FF45] border-lime-500/20 dark:border-lime-404/10"
+                      : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700"
                   }`}
                 >
                   {project.category === "AI" ? <Cpu size={20} /> : <Globe size={20} />}
                 </div>
                 <div>
-                  <span className="text-10px font-mono text-[#E5FF45] tracking-widest uppercase">
+                  <span className="text-10px font-mono text-lime-700 dark:text-lime-450 tracking-widest uppercase font-bold block">
                     {project.period} • {project.role}
                   </span>
-                  <h3 className="text-xl md:text-2xl font-display font-medium text-white group-hover:text-[#E5FF45] transition-colors duration-300 mt-0.5">
+                  <h3 className="text-xl md:text-2xl font-display font-medium text-slate-950 dark:text-white group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors duration-300 mt-0.5">
                     {project.title}
                   </h3>
                 </div>
               </div>
-              <span className="text-xs font-mono px-3 py-1 bg-white/5 text-white/50 border border-white/10 rounded-full">
+              <span className="text-xs font-mono px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-805 rounded-full">
                 {project.category}
               </span>
             </div>
 
             {/* Main Desc */}
-            <p className="text-white/70 text-sm leading-relaxed mb-6 font-light">
+            <p className="text-slate-650 dark:text-slate-300 text-sm leading-relaxed mb-6 font-light">
               {project.description}
             </p>
 
@@ -381,8 +457,8 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
             {/* Bullets */}
             <ul className="space-y-2.5 mb-6 flex-grow">
               {project.bullets.map((bullet, bIdx) => (
-                <li key={bIdx} className="flex items-start gap-2.5 text-xs text-white/60 leading-normal">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#E5FF45] mt-1.5 shrink-0" />
+                <li key={bIdx} className="flex items-start gap-2.5 text-xs text-slate-605 dark:text-slate-400 leading-normal">
+                  <span className="w-1.5 h-1.5 rounded-full bg-lime-500 mt-1.5 shrink-0" />
                   <span>{bullet}</span>
                 </li>
               ))}
@@ -392,14 +468,14 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
             {project.metrics && (
               <div
                 id={`project-metrics-${project.id}`}
-                className="grid grid-cols-3 gap-3 p-4 bg-black/30 rounded-xl border border-white/5 mb-6"
+                className="grid grid-cols-3 gap-3 p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200/60 dark:border-slate-800 mb-6"
               >
                 {project.metrics.map((metric, mIdx) => (
                   <div key={mIdx} className="text-center">
-                    <span className="block text-xs font-mono text-white/40 uppercase tracking-wider">
+                    <span className="block text-xs font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold">
                       {metric.label}
                     </span>
-                    <span className="block text-base font-display font-semibold text-white mt-1">
+                    <span className="block text-base font-display font-semibold text-slate-800 dark:text-slate-200 mt-1">
                       {metric.value}
                     </span>
                   </div>
@@ -412,7 +488,7 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-mono bg-black px-2.5 py-1 rounded text-white/50 border border-white/5"
+                  className="text-[10px] font-mono bg-slate-50 dark:bg-slate-900/40 px-2.5 py-1 rounded text-slate-600 dark:text-slate-400 border border-slate-250/50 dark:border-slate-850/80 shadow-2xs"
                 >
                   {tag}
                 </span>
@@ -420,7 +496,7 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
             </div>
 
             {/* Footer Actions */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-white/10">
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
                 {project.github && (
                   <a
@@ -428,7 +504,7 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 px-4 py-2 bg-white/3 border border-white/10 hover:border-white/30 text-xs font-mono text-white/80 hover:text-white rounded-xl transition-all duration-300 cursor-pointer hover:shadow-[0_0_15px_rgba(255,255,255,0.05)]"
+                    className="flex items-center gap-1.5 px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-xl transition-all duration-300 cursor-pointer shadow-2xs hover:bg-slate-100 dark:hover:bg-slate-800"
                   >
                     <Github size={13} />
                     <span>Repository</span>
@@ -439,10 +515,10 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
               <button
                 id={`project-case-action-${project.id}`}
                 onClick={() => onSelectCaseStudy(project.caseStudyId)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#E5FF45]/10 hover:bg-[#E5FF45] text-[#E5FF45] hover:text-black border border-[#E5FF45]/20 hover:border-[#E5FF45] text-xs font-mono font-bold uppercase rounded-xl tracking-wider hover:shadow-[0_0_20px_rgba(229,255,69,0.35)] transition-all duration-300 cursor-pointer group/btn"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 dark:bg-[#E5FF45] hover:bg-slate-800 dark:hover:bg-lime-300 text-white dark:text-black text-xs font-mono font-bold uppercase rounded-xl tracking-wider transition-all duration-300 cursor-pointer group/btn shadow"
               >
                 <span>Explore Case Study</span>
-                <MoveRight size={13} className="group-hover/btn:translate-x-1 transition-transform" />
+                <MoveRight size={13} className="group-hover/btn:translate-x-1 transition-transform text-lime-400 dark:text-slate-950" />
               </button>
             </div>
           </div>

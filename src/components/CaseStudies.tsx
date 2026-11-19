@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CaseStudiesData } from "../data";
-import { Target, Lightbulb, ShieldAlert, Cpu, CheckCircle2, ChevronRight, Terminal, Layers, ArrowRight } from "lucide-react";
+import { Target, Lightbulb, ShieldAlert, Cpu, CheckCircle2, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface CaseStudiesProps {
@@ -9,42 +9,51 @@ interface CaseStudiesProps {
 
 export default function CaseStudies({ initialCaseStudyId }: CaseStudiesProps) {
   const [activeCaseId, setActiveCaseId] = useState<string>(
-    initialCaseStudyId || "ppt-generator"
+    initialCaseStudyId || CaseStudiesData[0].id
   );
 
+  useEffect(() => {
+    if (initialCaseStudyId) {
+      setActiveCaseId(initialCaseStudyId);
+    }
+  }, [initialCaseStudyId]);
+
   const selectedCase =
-    CaseStudiesData.find((study) => study.id === activeCaseId) ||
-    CaseStudiesData[0];
+    CaseStudiesData.find((study) => study.id === activeCaseId) || CaseStudiesData[0];
 
   return (
-    <section id="case-studies" className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-slate-200 dark:border-slate-800">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+    <section id="case-studies" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 pb-6 border-b border-black/10 dark:border-white/10">
         <div>
-          <span className="text-xs font-mono text-lime-700 dark:text-lime-400 tracking-wider uppercase font-extrabold block">
-            // Deep-Dive Core
+          <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-lime-700 dark:text-[#E5FF45] font-semibold block">
+            Architecture Deep Dives
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white tracking-tight mt-1">
-            Case Studies Explorer
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-neutral-950 dark:text-white tracking-tight mt-1">
+            Engineering Case Studies
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5 max-w-lg">
-            Complete technical breakdowns, active network topologies, and resolutions of architectural bottlenecks.
+          <p className="text-neutral-600 dark:text-white/55 text-sm sm:text-base mt-2 max-w-xl">
+            System topologies, technical constraints, and measurable outcomes across AI and full-stack deployments.
           </p>
         </div>
 
-        {/* Tab Controls */}
-        <div id="case-study-selectors" className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg self-start">
+        {/* Selector Controls */}
+        <div
+          id="case-study-selectors"
+          className="inline-flex flex-wrap items-center gap-1 p-1 bg-black/[0.04] dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-xl self-start"
+        >
           {CaseStudiesData.map((study) => (
             <button
               key={study.id}
               id={`select-case-${study.id}`}
+              type="button"
               onClick={() => setActiveCaseId(study.id)}
-              className={`px-4 py-1.5 text-xs font-mono rounded-md uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+              className={`px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider rounded-lg transition-colors duration-150 cursor-pointer whitespace-nowrap ${
                 activeCaseId === study.id
-                  ? "bg-slate-900 dark:bg-[#E5FF45] text-white dark:text-black font-semibold"
-                  : "text-slate-500 dark:text-slate-450 hover:text-slate-900 dark:hover:text-white border border-transparent"
+                  ? "bg-neutral-950 dark:bg-[#E5FF45] text-[#E5FF45] dark:text-black font-bold"
+                  : "text-neutral-600 dark:text-white/55 hover:text-neutral-950 dark:hover:text-white"
               }`}
             >
-              {study.title.split(" ")[0]} Project
+              {study.title}
             </button>
           ))}
         </div>
@@ -53,76 +62,90 @@ export default function CaseStudies({ initialCaseStudyId }: CaseStudiesProps) {
       <AnimatePresence mode="wait">
         <motion.div
           key={selectedCase.id}
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -15 }}
-          transition={{ duration: 0.35 }}
-          className="space-y-12"
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.22 }}
+          className="space-y-10"
         >
-          {/* Subtitle intro */}
-          <div className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xs">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-display font-medium text-slate-900 dark:text-white">
+          {/* Overview Banner */}
+          <div className="relative overflow-hidden bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-2xl p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="pointer-events-none absolute -top-12 -right-12 w-44 h-44 rounded-full bg-[#E5FF45] blur-[95px] opacity-15" />
+            <div className="relative z-10">
+              <h3 className="text-2xl sm:text-3xl font-display font-bold text-neutral-950 dark:text-white tracking-tight">
                 {selectedCase.title}
               </h3>
-              <p className="text-lime-700 dark:text-lime-400 text-sm font-mono mt-1 font-extrabold">// {selectedCase.subtitle}</p>
+              <p className="text-lime-700 dark:text-[#E5FF45] text-sm font-medium mt-1.5">
+                {selectedCase.subtitle}
+              </p>
             </div>
-            <div className="flex flex-wrap gap-1.5 max-w-md">
-              {selectedCase.technologiesUsed.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-[10px] font-mono bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-2.5 py-1 rounded text-slate-650 dark:text-slate-400 shadow-2xs select-none"
-                >
-                  {tech}
-                </span>
+            <div className="relative z-10 text-xs font-mono text-neutral-500 dark:text-white/45 max-w-md lg:text-right leading-relaxed">
+              {selectedCase.technologiesUsed.map((tech, idx) => (
+                <React.Fragment key={tech}>
+                  <span className="text-neutral-800 dark:text-white/75">{tech}</span>
+                  {idx < selectedCase.technologiesUsed.length - 1 && (
+                    <span className="mx-2 text-neutral-300 dark:text-white/20">·</span>
+                  )}
+                </React.Fragment>
               ))}
             </div>
           </div>
 
-          {/* Problem vs Solution cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Problem vs Solution */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div
               id="case-problem-card"
-              className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-sm"
+              className="bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-2xl p-6 sm:p-7"
             >
-              <div className="flex items-center gap-3 mb-5 text-slate-800 dark:text-slate-200 pb-3 border-b border-slate-100 dark:border-slate-800">
-                <Target size={20} className="text-slate-400" />
-                <h4 className="font-display text-slate-900 dark:text-white font-bold text-lg">The Technical Bottleneck</h4>
+              <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-black/10 dark:border-white/10">
+                <Target size={18} className="text-neutral-500 dark:text-white/50" />
+                <h4 className="font-display text-neutral-950 dark:text-white font-bold text-base sm:text-lg">
+                  The Engineering Challenge
+                </h4>
               </div>
-              <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed font-light">{selectedCase.problem}</p>
+              <p className="text-neutral-600 dark:text-white/65 text-sm leading-relaxed">
+                {selectedCase.problem}
+              </p>
             </div>
 
             <div
               id="case-solution-card"
-              className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 hover:border-lime-500/20 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-sm"
+              className="bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-2xl p-6 sm:p-7"
             >
-              <div className="flex items-center gap-3 mb-5 text-lime-700 dark:text-lime-400 pb-3 border-b border-lime-500/10 dark:border-slate-800">
-                <Lightbulb size={20} />
-                <h4 className="font-display text-slate-900 dark:text-white font-bold text-lg">Architectural Solution</h4>
+              <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-black/10 dark:border-white/10">
+                <Lightbulb size={18} className="text-lime-700 dark:text-[#E5FF45]" />
+                <h4 className="font-display text-neutral-950 dark:text-white font-bold text-base sm:text-lg">
+                  Architectural Solution
+                </h4>
               </div>
-              <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed font-light">{selectedCase.solution}</p>
+              <p className="text-neutral-600 dark:text-white/65 text-sm leading-relaxed">
+                {selectedCase.solution}
+              </p>
             </div>
           </div>
 
-          {/* Architecture Mapping (Fluid Flow UI Grid) */}
+          {/* Infrastructure Topology */}
           <div
             id="case-topology-map"
-            className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm"
+            className="bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-2xl p-6 sm:p-8"
           >
-            <div className="flex justify-between items-center mb-8 pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div className="flex items-center gap-3 text-lime-700 dark:text-lime-400">
-                <Cpu size={20} />
-                <h4 className="font-display text-slate-950 dark:text-white font-bold text-lg">Infrastructure Topology</h4>
+            <div className="flex flex-wrap justify-between items-center gap-2 mb-6 pb-4 border-b border-black/10 dark:border-white/10">
+              <div className="flex items-center gap-2.5">
+                <Cpu size={18} className="text-lime-700 dark:text-[#E5FF45]" />
+                <h4 className="font-display text-neutral-950 dark:text-white font-bold text-base sm:text-lg">
+                  System Topology
+                </h4>
               </div>
-              <span className="text-xs font-mono text-slate-400 dark:text-slate-500 uppercase font-semibold">// Network Model Nodes</span>
+              <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-neutral-500 dark:text-white/40">
+                Client → Service → Storage Flow
+              </span>
             </div>
 
-            {/* Topology Flow Layout - Custom styled pipeline */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-              {/* Client tier */}
-              <div id="tier-client" className="space-y-4">
-                <span className="text-10px font-mono text-slate-400 dark:text-slate-500 tracking-wider uppercase block text-center md:text-left font-bold">
-                  Frontend Interface
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Tier 1: Client */}
+              <div id="tier-client" className="space-y-3">
+                <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-neutral-500 dark:text-white/45 font-semibold block">
+                  01 · Client Tier
                 </span>
                 {selectedCase.architecture.nodes
                   .filter((n) => n.type === "client")
@@ -130,29 +153,22 @@ export default function CaseStudies({ initialCaseStudyId }: CaseStudiesProps) {
                     <div
                       key={node.id}
                       id={`node-${node.id}`}
-                      className="p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-slate-300 dark:hover:border-slate-700 transition-colors duration-250 cursor-default"
+                      className="p-4 bg-neutral-50 dark:bg-[#080808] border border-black/10 dark:border-white/10 rounded-xl"
                     >
-                      <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
-                        <span className="w-2 h-2 rounded-full bg-lime-500 animate-pulse" />
-                        <h5 className="text-sm font-semibold text-slate-900 dark:text-slate-100 font-display">{node.label}</h5>
-                      </div>
-                      <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed font-light">{node.role}</p>
+                      <h5 className="text-sm font-display font-bold text-neutral-950 dark:text-white">
+                        {node.label}
+                      </h5>
+                      <p className="text-neutral-600 dark:text-white/55 text-xs leading-relaxed mt-1.5">
+                        {node.role}
+                      </p>
                     </div>
                   ))}
               </div>
 
-              {/* Connections Column 1: Client to API */}
-              <div className="hidden md:flex flex-col justify-center items-center pointer-events-none relative">
-                <div className="w-full h-px bg-slate-200 dark:bg-slate-800 relative" />
-                <span className="text-[9px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-1 rounded-full absolute -translate-y-1/2 select-none">
-                  REST Requests
-                </span>
-              </div>
-
-              {/* Server / API Tier */}
-              <div id="tier-api" className="space-y-4">
-                <span className="text-10px font-mono text-slate-400 dark:text-slate-500 tracking-wider uppercase block text-center font-bold">
-                  Core Service Logic
+              {/* Tier 2: Core Service Logic */}
+              <div id="tier-api" className="space-y-3">
+                <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-lime-700 dark:text-[#E5FF45] font-semibold block">
+                  02 · Core Services &amp; API
                 </span>
                 {selectedCase.architecture.nodes
                   .filter((n) => n.type === "api" || (n.type === "server" && n.id !== "mcp-server"))
@@ -160,29 +176,22 @@ export default function CaseStudies({ initialCaseStudyId }: CaseStudiesProps) {
                     <div
                       key={node.id}
                       id={`node-${node.id}`}
-                      className="p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-lime-500/20 dark:hover:border-lime-400/20 transition-colors duration-250 cursor-default"
+                      className="p-4 bg-lime-500/[0.06] dark:bg-[#E5FF45]/[0.05] border border-lime-600/25 dark:border-[#E5FF45]/25 rounded-xl"
                     >
-                      <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
-                        <span className="w-2 h-2 rounded-full bg-lime-600 dark:bg-lime-400" />
-                        <h5 className="text-sm font-semibold text-slate-900 dark:text-slate-100 font-display">{node.label}</h5>
-                      </div>
-                      <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed font-light">{node.role}</p>
+                      <h5 className="text-sm font-display font-bold text-neutral-950 dark:text-white">
+                        {node.label}
+                      </h5>
+                      <p className="text-neutral-600 dark:text-white/65 text-xs leading-relaxed mt-1.5">
+                        {node.role}
+                      </p>
                     </div>
                   ))}
               </div>
 
-              {/* Connections Column 2: API to Utilities / Storage */}
-              <div className="hidden md:flex flex-col justify-center items-center pointer-events-none relative">
-                <div className="w-full h-px bg-slate-200 dark:bg-slate-800 relative" />
-                <span className="text-[9px] font-mono text-lime-800 dark:text-[#E5FF45] bg-lime-100/60 dark:bg-lime-950/40 border border-lime-200 dark:border-lime-800/80 px-2.5 py-1 rounded-full absolute -translate-y-1/2 select-none font-bold">
-                  I/O Pipelines
-                </span>
-              </div>
-
-              {/* Storage or Secondary Server Tier */}
-              <div id="tier-storage" className="space-y-4">
-                <span className="text-10px font-mono text-slate-400 dark:text-slate-500 tracking-wider uppercase block text-center md:text-right font-bold">
-                  Integration & Storage
+              {/* Tier 3: Storage & Integrations */}
+              <div id="tier-storage" className="space-y-3">
+                <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-neutral-500 dark:text-white/45 font-semibold block">
+                  03 · Storage &amp; MCP Integrations
                 </span>
                 {selectedCase.architecture.nodes
                   .filter((n) => n.type === "storage" || n.id === "mcp-server")
@@ -190,70 +199,76 @@ export default function CaseStudies({ initialCaseStudyId }: CaseStudiesProps) {
                     <div
                       key={node.id}
                       id={`node-${node.id}`}
-                      className="p-5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-slate-300 dark:hover:border-slate-700 transition-colors duration-250 cursor-default"
+                      className="p-4 bg-neutral-50 dark:bg-[#080808] border border-black/10 dark:border-white/10 rounded-xl"
                     >
-                      <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-100 dark:border-slate-800">
-                        <span className="w-2 h-2 rounded-full bg-slate-400 dark:bg-slate-500" />
-                        <h5 className="text-sm font-semibold text-slate-900 dark:text-slate-100 font-display">{node.label}</h5>
-                      </div>
-                      <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed font-light">{node.role}</p>
+                      <h5 className="text-sm font-display font-bold text-neutral-950 dark:text-white">
+                        {node.label}
+                      </h5>
+                      <p className="text-neutral-600 dark:text-white/55 text-xs leading-relaxed mt-1.5">
+                        {node.role}
+                      </p>
                     </div>
                   ))}
               </div>
             </div>
 
-            {/* Mobile connections indicator */}
-            <div className="flex md:hidden flex-col items-center gap-1.5 mt-6 py-2 border-t border-slate-100 dark:border-slate-800">
-              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">Pipeline Flow</span>
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-605 dark:text-slate-400">
-                <span>UI Client</span>
-                <ArrowRight size={12} />
-                <span>API Middleware</span>
-                <ArrowRight size={12} />
-                <span>Compiler Hub</span>
-              </div>
+            {/* Data Flow Summary */}
+            <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center gap-2 text-xs font-mono text-neutral-500 dark:text-white/45">
+              <span>Client Interface</span>
+              <ArrowRight size={12} className="text-lime-700 dark:text-[#E5FF45]" />
+              <span>REST / API Layer</span>
+              <ArrowRight size={12} className="text-lime-700 dark:text-[#E5FF45]" />
+              <span>Orchestration &amp; Storage</span>
             </div>
           </div>
 
-          {/* Key technical challenges */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-800">
-              <ShieldAlert size={20} className="text-lime-700 dark:text-lime-400" />
-              <h4 className="font-display text-slate-900 dark:text-white font-bold text-lg">Bottlenecks & Creative Solutions</h4>
+          {/* Technical Bottlenecks & Resolutions */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-2.5 pb-2 border-b border-black/10 dark:border-white/10">
+              <ShieldAlert size={18} className="text-lime-700 dark:text-[#E5FF45]" />
+              <h4 className="font-display text-neutral-950 dark:text-white font-bold text-lg">
+                Key Bottlenecks &amp; Resolutions
+              </h4>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {selectedCase.keyChallenges.map((challenge, idx) => (
                 <div
                   key={idx}
                   id={`challenge-item-${idx}`}
-                  className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 transition-all duration-300 overflow-hidden flex flex-col rounded-2xl shadow-sm hover:shadow"
+                  className="bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-2xl overflow-hidden flex flex-col"
                 >
-                  {/* challenge section */}
-                  <div className="p-6 bg-slate-50/60 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-800">
-                    <span className="text-[10px] font-mono font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 px-2.5 py-0.5 rounded-full uppercase">
-                      Problem Aspect {idx + 1}
+                  <div className="p-6 bg-neutral-50/70 dark:bg-[#080808]/60 border-b border-black/10 dark:border-white/10">
+                    <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-neutral-500 dark:text-white/45 font-semibold">
+                      Challenge 0{idx + 1}
                     </span>
-                    <h5 className="text-base font-display font-bold text-slate-900 dark:text-white mt-3">{challenge.title}</h5>
-                    <p className="text-slate-550 dark:text-slate-400 text-sm leading-relaxed mt-2 font-light">{challenge.desc}</p>
+                    <h5 className="text-base font-display font-bold text-neutral-950 dark:text-white mt-1.5">
+                      {challenge.title}
+                    </h5>
+                    <p className="text-neutral-600 dark:text-white/55 text-sm leading-relaxed mt-2">
+                      {challenge.desc}
+                    </p>
                   </div>
-                  {/* resolution section */}
-                  <div className="p-6 bg-white dark:bg-[#121212] flex-grow">
-                    <span className="text-[10px] font-mono font-bold text-lime-700 dark:text-[#E5FF45] bg-lime-500/10 dark:bg-lime-400/10 border border-lime-500/20 dark:border-lime-400/25 px-2.5 py-0.5 rounded-full uppercase">
-                      Technical Resolution
+                  <div className="p-6 flex-grow">
+                    <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-lime-700 dark:text-[#E5FF45] font-semibold">
+                      Resolution
                     </span>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mt-3 font-light">{challenge.resolution}</p>
+                    <p className="text-neutral-700 dark:text-white/70 text-sm leading-relaxed mt-2">
+                      {challenge.resolution}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Measurable Strategic Impact */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 text-lime-700 dark:text-lime-400 pb-2 border-b border-slate-250 dark:border-slate-800">
-              <CheckCircle2 size={20} />
-              <h4 className="font-display text-slate-900 dark:text-white font-bold text-lg">Measurable Enterprise Impact</h4>
+          {/* Measurable Impact */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-2.5 pb-2 border-b border-black/10 dark:border-white/10">
+              <CheckCircle2 size={18} className="text-lime-700 dark:text-[#E5FF45]" />
+              <h4 className="font-display text-neutral-950 dark:text-white font-bold text-lg">
+                Measurable Impact
+              </h4>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -261,13 +276,17 @@ export default function CaseStudies({ initialCaseStudyId }: CaseStudiesProps) {
                 <div
                   key={idx}
                   id={`impact-card-${idx}`}
-                  className="bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 text-center rounded-2xl p-6 md:p-8 transition-colors duration-300 shadow-sm hover:border-lime-500/15"
+                  className="bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-2xl p-6 text-center"
                 >
-                  <span className="block text-3xl md:text-4xl font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-lime-700 dark:from-[#E5FF45] to-slate-900 dark:to-white mb-2">
+                  <span className="block text-3xl sm:text-4xl font-display font-extrabold text-lime-700 dark:text-[#E5FF45] tabular-nums mb-2">
                     {metric.value}
                   </span>
-                  <span className="block text-sm font-display font-bold text-slate-800 dark:text-slate-200 mb-1.5 uppercase tracking-wide">{metric.title}</span>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed font-light">{metric.desc}</p>
+                  <span className="block text-sm font-display font-bold text-neutral-950 dark:text-white mb-1.5">
+                    {metric.title}
+                  </span>
+                  <p className="text-neutral-600 dark:text-white/55 text-xs leading-relaxed">
+                    {metric.desc}
+                  </p>
                 </div>
               ))}
             </div>

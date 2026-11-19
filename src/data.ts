@@ -165,22 +165,22 @@ export const SkillsData: SkillCategory[] = [
     ]
   },
   {
-    category: "Agentic AI",
+    category: "Agentic AI & ML",
     icon: "Cpu",
     items: [
-      { name: "Agentic AI Systems", level: 5 },
-      { name: "MCP Servers", level: 5 },
-      { name: "LLM Orchestration", level: 5 },
-      { name: "FastAPI Servings", level: 4 }
+      { name: "RAG & Vector Search", level: 5 },
+      { name: "Agentic AI & Tool Calling", level: 5 },
+      { name: "MCP Servers & Guardrails", level: 5 },
+      { name: "Scikit-Learn & FastAPI ML", level: 4 }
     ]
   },
   {
-    category: "Cloud & Dev Tools",
+    category: "Cloud & DevOps",
     icon: "Cloud",
     items: [
-      { name: "AWS", level: 4 },
-      { name: "Render", level: 4 },
-      { name: "Docker", level: 4 },
+      { name: "AWS & Azure AI / ACA", level: 4 },
+      { name: "Docker Containers", level: 4 },
+      { name: "Render & CI/CD", level: 4 },
       { name: "Git / GitHub", level: 5 }
     ]
   },
@@ -198,9 +198,24 @@ export const SkillsData: SkillCategory[] = [
 
 export const CertificationsData: Certification[] = [
   {
+    name: "Microsoft Certified: Azure AI Fundamentals",
+    issuer: "Microsoft",
+    year: "2025"
+  },
+  {
     name: "AWS Certified Machine Learning Engineer – Associate",
     issuer: "Amazon Web Services (AWS)",
     year: "2025"
+  },
+  {
+    name: "Wipro TalentNext Java Full Stack",
+    issuer: "Wipro TalentNext",
+    year: "2025"
+  },
+  {
+    name: "Data Science Using Python",
+    issuer: "Python Data Science Certification",
+    year: "2024"
   },
   {
     name: "AWS Certified Cloud Practitioner",
@@ -208,23 +223,17 @@ export const CertificationsData: Certification[] = [
     year: "2024"
   },
   {
-    name: "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional",
-    issuer: "Oracle University",
-    year: "2025"
-  },
-  {
     name: "MongoDB Associate Database Administrator",
     issuer: "MongoDB Inc.",
-    year: "2024"
-  },
-  {
-    name: "Software Engineer Certification",
-    issuer: "HackerRank",
     year: "2024"
   }
 ];
 
 export const AchievementsData: Achievement[] = [
+  {
+    text: "Autonomous Insurance Claim Pre-Assessment Agent",
+    subtext: "Engineered an autonomous Insurance Claim Pre-Assessment Agent using RAG, vector search, and LLM tool calling, cutting policy validation latency by 40% with built-in AI guardrails and output evaluation."
+  },
   {
     text: "Awarded Merit Scholarship at KL University",
     subtext: "Secured for exceptional academic performance in Machine Learning B.Tech streams."
@@ -232,10 +241,6 @@ export const AchievementsData: Achievement[] = [
   {
     text: "Secured AP ECET 127th Rank in AP ECET 2024",
     subtext: "Achieved the prestigious 127th Rank state-wide among tens of thousands of Computer Science aspirants."
-  },
-  {
-    text: "OCI 2025 Certified Generative AI Professional",
-    subtext: "Validated advanced expertise designing conversational interfaces and prompt tuning neural models."
   }
 ];
 

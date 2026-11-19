@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { ProjectsData } from "../data";
-import { 
-  Cpu, 
-  Globe, 
-  Github, 
-  Milestone, 
-  Sparkles, 
-  MoveRight, 
-  Layers, 
-  ArrowUpRight,
+import {
+  Cpu,
+  Globe,
+  Github,
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Terminal,
   Database,
   Monitor,
   HardDrive,
-  CheckCircle2
+  CheckCircle2,
+  ExternalLink
 } from "lucide-react";
-import { Project } from "../types";
 
 interface ProjectsProps {
   onSelectCaseStudy: (caseStudyId: string) => void;
@@ -26,192 +21,91 @@ interface ProjectsProps {
 function ProjectGallery({ projectId }: { projectId: string }) {
   const [slideIdx, setSlideIdx] = useState(0);
 
-  // Define unique high-fidelity code-rendered slides for each project
-  const slides: Record<string, { title: string; subtitle: string; badge: string; node: React.ReactNode }[]> = {
+  const slides: Record<string, { title: string; subtitle: string; label: string; node: React.ReactNode }[]> = {
     "ppt-gen": [
       {
         title: "System Architecture Flow",
-        subtitle: "How generative outlines compile safely into presentation files",
-        badge: "ARCH DIAGRAM",
+        subtitle: "How generative outlines compile safely into editable PowerPoint files",
+        label: "Architecture",
         node: (
-          <div className="h-full flex flex-col justify-center px-4 space-y-4 font-mono text-[9px] sm:text-10px">
+          <div className="h-full flex flex-col justify-center px-3 space-y-3.5 font-mono text-[10px]">
             <div className="flex items-center justify-between gap-2">
-              <div className="p-2 bg-white/5 border border-white/10 rounded text-white flex flex-col items-center w-24 text-center">
-                <span className="text-[#E5FF45]">User Prompt</span>
-                <span className="text-white/30 text-[8px] mt-0.5">"Create deep AI deck..."</span>
-              </div>
-              
-              <div className="h-0.5 flex-grow bg-gradient-to-r from-[#E5FF45]/30 to-white/10 relative">
-                <span className="absolute -top-1 left-1.5 w-1.5 h-1.5 rounded-full bg-[#E5FF45] animate-ping" />
+              <div className="p-2 bg-white/[0.04] border border-white/10 rounded-lg text-white flex flex-col items-center w-24 text-center">
+                <span className="text-[#E5FF45] font-semibold">User Prompt</span>
+                <span className="text-white/40 text-[8.5px] mt-0.5">Topic &amp; outline</span>
               </div>
 
-              <div className="p-2 bg-[#E5FF45]/15 border border-[#E5FF45]/20 rounded text-[#E5FF45] flex flex-col items-center w-24 text-center">
-                <Cpu size={12} className="mb-0.5" />
-                <span>FastAPI Compiler</span>
+              <div className="h-px flex-grow bg-gradient-to-r from-[#E5FF45]/60 to-white/15" />
+
+              <div className="p-2 bg-[#E5FF45]/10 border border-[#E5FF45]/30 rounded-lg text-[#E5FF45] flex flex-col items-center w-24 text-center">
+                <Cpu size={13} className="mb-0.5 text-[#E5FF45]" />
+                <span className="font-semibold">FastAPI</span>
               </div>
 
-              <div className="h-0.5 flex-grow bg-gradient-to-r from-white/10 to-[#E5FF45]/30 relative">
-                <span className="absolute -top-1 right-2.5 w-1.5 h-1.5 rounded-full bg-[#E5FF45] animate-ping delay-500" />
-              </div>
+              <div className="h-px flex-grow bg-gradient-to-r from-white/15 to-[#E5FF45]/60" />
 
-              <div className="p-2 bg-white/5 border border-white/10 rounded text-white flex flex-col items-center w-24 text-center">
-                <span className="text-[#E5FF45] font-bold">.PPTX File</span>
-                <span className="text-white/30 text-[8px] mt-0.5">Downloaded Natively</span>
+              <div className="p-2 bg-white/[0.04] border border-white/10 rounded-lg text-white flex flex-col items-center w-24 text-center">
+                <span className="text-white font-semibold">.PPTX Deck</span>
+                <span className="text-white/40 text-[8.5px] mt-0.5">Native export</span>
               </div>
             </div>
 
-            <div className="p-2 bg-black/40 border border-white/5 rounded flex items-center justify-center gap-1.5 text-white/55 text-center text-[9px]">
-              <Database size={10} className="text-[#E5FF45]" />
-              <span>Context Sync: Integrated MCP Directories mapping slide structures</span>
+            <div className="p-2 bg-white/[0.03] border border-white/10 rounded-lg flex items-center justify-center gap-2 text-white/60 text-[9.5px]">
+              <Database size={11} className="text-[#E5FF45] shrink-0" />
+              <span>MCP Directory Sync mapping slide templates &amp; assets</span>
             </div>
           </div>
         )
       },
       {
-        title: "Interactive Slides Viewer",
-        subtitle: "Programmatic template alignment showing slide dimensions",
-        badge: "USER VIEWPORT MOCK",
+        title: "Programmatic Slide Preview",
+        subtitle: "Automatic layout balancing and dynamic typography scaling",
+        label: "Slide Engine",
         node: (
-          <div className="h-full flex gap-3 text-10px overflow-hidden">
-            {/* Slide List Sidebar */}
-            <div className="w-1/4 bg-black/50 border border-white/5 p-1.5 rounded flex flex-col gap-1.5">
-              <div className="h-4 bg-white/10 rounded flex items-center px-1 text-[8px]">Slide 1: Intro</div>
-              <div className="h-4 bg-[#E5FF45]/15 border border-[#E5FF45]/20 rounded flex items-center px-1 text-[8px] text-[#E5FF45]">Slide 2: System</div>
-              <div className="h-4 bg-white/5 rounded flex items-center px-1 text-[8px] text-white/30">Slide 3: End</div>
+          <div className="h-full flex gap-3 text-[10px] overflow-hidden">
+            <div className="w-1/4 bg-white/[0.03] border border-white/10 p-1.5 rounded-lg flex flex-col gap-1.5 font-mono">
+              <div className="h-5 bg-white/[0.06] rounded flex items-center px-1.5 text-[8.5px] text-white/50">01 Intro</div>
+              <div className="h-5 bg-[#E5FF45]/15 border border-[#E5FF45]/35 rounded flex items-center px-1.5 text-[8.5px] text-[#E5FF45] font-semibold">02 System</div>
+              <div className="h-5 bg-white/[0.03] rounded flex items-center px-1.5 text-[8.5px] text-white/35">03 Impact</div>
             </div>
-            {/* Slide active preview canvas */}
-            <div className="flex-1 bg-black/30 border border-white/10 rounded-lg p-3 flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-1 right-1 px-1.5 py-0.5 bg-black/60 rounded text-[7px] text-[#E5FF45]">16:9 SCREEN</div>
+            <div className="flex-1 bg-white/[0.03] border border-white/10 rounded-lg p-3 flex flex-col justify-between">
               <div>
-                <span className="text-[8px] font-mono text-[#E5FF45] block uppercase">// ACTIVE SLIDE FRAME</span>
-                <h4 className="text-xs font-semibold text-white mt-0.5 font-display">Deep Learning Agentic AI</h4>
-                <p className="text-white/40 text-[8px] mt-1 leading-relaxed font-sans">
-                  • Decentralized multi-node execution networks.<br />
-                  • Real-time local filesystem search via MCP.
+                <div className="flex items-center justify-between text-[8px] font-mono text-white/40">
+                  <span className="text-[#E5FF45] uppercase font-semibold">Active Slide</span>
+                  <span>16:9 Widescreen</span>
+                </div>
+                <h4 className="text-xs font-semibold text-white mt-1 font-display">Agentic Architecture</h4>
+                <p className="text-white/55 text-[9px] mt-1 leading-relaxed">
+                  · Structured outline parsing via LLM tool calls
+                  <br />· Sandboxed local asset search over MCP
                 </p>
               </div>
-              <div className="flex justify-between items-center text-[8px] text-white/30 border-t border-white/5 pt-1.5 font-mono">
-                <span>Layout: Vertical Two-Column</span>
-                <span>Page 02 / 08</span>
+              <div className="flex justify-between items-center text-[8px] text-white/40 border-t border-white/10 pt-1.5 font-mono tabular-nums">
+                <span>Two-Column Grid</span>
+                <span>02 / 08</span>
               </div>
             </div>
           </div>
         )
       },
       {
-        title: "MCP Core Router Terminal",
-        subtitle: "FastAPI server logging slide compilation tasks",
-        badge: "COMPILER TERMINAL",
+        title: "MCP Compiler Output",
+        subtitle: "FastAPI pipeline compiling structured markdown into binary slides",
+        label: "Build Log",
         node: (
-          <div className="h-full bg-black/70 rounded-lg p-3.5 font-mono text-[9px] text-[#E5FF45] flex flex-col justify-between border border-white/5">
+          <div className="h-full bg-[#050505] rounded-lg p-3 font-mono text-[9.5px] flex flex-col justify-between border border-white/10">
             <div className="space-y-1">
-              <div className="flex items-center gap-1.5 border-b border-white/5 pb-1 text-white/30">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500/30" />
-                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/30" />
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500/30" />
-                <span className="ml-1 text-[8px]">mcp-server-stdout.log</span>
+              <div className="flex items-center justify-between border-b border-white/10 pb-1 text-white/40 text-[8.5px]">
+                <span>mcp-compiler.log</span>
+                <span className="text-[#E5FF45]">200 OK</span>
               </div>
-              <p className="text-white/30 pt-1">$ python3 main.py --compile --output=dl_agentic.pptx</p>
-              <p className="text-white/85">✔ [02:14:02Z] Established LLM presentation agent connection.</p>
-              <p className="text-[#E5FF45]">✔ [02:14:03Z] MCP mapping completed: 4 directories scanned.</p>
-              <p className="text-white/95 text-[8.5px]">✔ [02:14:04Z] python-pptx rendering 8 slides (Cosmic Slate theme)...</p>
+              <p className="text-white/45 pt-0.5">$ python3 main.py --compile --out=deck.pptx</p>
+              <p className="text-white/80">Connected to presentation orchestration agent.</p>
+              <p className="text-[#E5FF45]">MCP directory scan complete (4 template sources).</p>
+              <p className="text-white/90">python-pptx rendered 8 editable slides in 256ms.</p>
             </div>
-            <div className="text-right text-[8px] text-white/30">
-              SUCCESS • 256ms • PORT 3000
-            </div>
-          </div>
-        )
-      }
-    ],
-    "fangs-ent": [
-      {
-        title: "Cyber Game Lobby Portal",
-        subtitle: "Engaging dashboard illustrating gamified trivia portals",
-        badge: "GAME PLATFORM",
-        node: (
-          <div className="h-full flex flex-col justify-between">
-            <div className="flex justify-between items-center bg-black/40 p-2 border border-white/5 rounded-lg font-mono">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[9px] text-white font-medium">LOBBY CONNECTED</span>
-              </div>
-              <span className="text-[10px] text-[#E5FF45] font-black">Active Score: 8,420 XP</span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 py-1 font-mono text-[9px]">
-              <div className="p-2 bg-[#E5FF45]/5 hover:bg-[#E5FF45]/10 border border-[#E5FF45]/20 rounded-xl flex items-center justify-between">
-                <span>🎮 Code Maze loop</span>
-                <span className="text-[#E5FF45] font-semibold text-[8px]">Play</span>
-              </div>
-              <div className="p-2 bg-white/5 hover:bg-white/10 border border-white/5 rounded-xl flex items-center justify-between">
-                <span>🧠 Pop Trivia</span>
-                <span className="text-white/40 text-[8px]">Open</span>
-              </div>
-            </div>
-
-            <div className="text-[8px] text-white/30 font-mono text-center pb-0.5">
-              React dynamic client state retains scores and completions local-first.
-            </div>
-          </div>
-        )
-      },
-      {
-        title: "Arcade Brainteaser Frame",
-        subtitle: "High responsiveness and interactive choices viewport",
-        badge: "USER INTERFACE MOCK",
-        node: (
-          <div className="h-full bg-black/35 border border-white/5 rounded-lg p-3 flex flex-col justify-between">
-            <div>
-              <div className="flex justify-between items-center text-[7.5px] font-mono text-white/40 mb-1">
-                <span>SESSION STATUS: ACTIVE</span>
-                <span className="text-[#E5FF45] font-semibold">TIMER: 45 SEC</span>
-              </div>
-              <h4 className="text-xs font-semibold text-white font-display">Logic Challenge #02:</h4>
-              <p className="text-white/70 text-[9px] mt-1 leading-snug font-sans">
-                Detect the leaking closure inside high-frequency REST rendering callbacks:
-              </p>
-            </div>
-
-            <div className="space-y-1.5 font-mono text-[8px] sm:text-[9px]">
-              <div className="w-full text-left bg-black/50 border border-white/5 rounded px-2.5 py-1 text-white/70">
-                A) Bind custom state references outside useEffect hook.
-              </div>
-              <div className="w-full text-left bg-[#E5FF45]/10 border border-[#E5FF45]/20 rounded px-2.5 py-1 text-[#E5FF45] flex items-center justify-between">
-                <span>B) Stabilize array variables in memo dependency keys.</span>
-                <span className="text-[8px] text-[#E5FF45] font-bold">✔ OK</span>
-              </div>
-            </div>
-          </div>
-        )
-      },
-      {
-        title: "Client Cache Controller State",
-        subtitle: "Visual connection pipeline of local storage synchronizations",
-        badge: "CACHE ARCHITECTURE",
-        node: (
-          <div className="h-full flex flex-col justify-center space-y-3 font-mono text-[9px] px-2">
-            <div className="grid grid-cols-3 gap-2 items-center text-center">
-              <div className="p-2 bg-white/5 border border-white/10 rounded">
-                <Monitor size={12} className="mx-auto text-white/60 mb-1" />
-                <span className="text-white/80 block text-[8px]">UI View</span>
-                <span className="text-white/30 text-[7px]">React.js</span>
-              </div>
-
-              <div className="text-[9px] font-bold text-[#E5FF45]">
-                <span>◄───►</span>
-                <span className="block text-[7px] text-white/40 mt-0.5">Local Sync</span>
-              </div>
-
-              <div className="p-2 bg-[#E5FF45]/10 border border-[#E5FF45]/20 rounded text-[#E5FF45]">
-                <HardDrive size={12} className="mx-auto mb-1 text-[#E5FF45]" />
-                <span className="font-semibold block text-[8px]">Cache Disk</span>
-                <span className="text-[#E5FF45]/50 text-[7px]">LocalStorage</span>
-              </div>
-            </div>
-
-            <div className="p-1.5 bg-black/40 border border-white/5 rounded-lg flex items-center justify-center gap-1.5 text-white/50 text-[8px] text-center">
-              <CheckCircle2 size={10} className="text-[#E5FF45]" />
-              <span>Session recovery metrics commit real-time: 0ms latencies.</span>
+            <div className="text-right text-[8.5px] text-white/40 tabular-nums">
+              80% manual effort saved
             </div>
           </div>
         )
@@ -220,74 +114,162 @@ function ProjectGallery({ projectId }: { projectId: string }) {
     "iris-ml": [
       {
         title: "Model Prediction Endpoint",
-        subtitle: "Mock UI displaying real-time prediction payload structures",
-        badge: "SWAGGER API DOCS",
+        subtitle: "FastAPI inference route returning validated species classification",
+        label: "OpenAPI / Swagger",
         node: (
-          <div className="h-full flex flex-col justify-between font-mono text-[9px] text-slate-700 dark:text-slate-300">
-            <div className="flex items-center justify-between border-b border-black/5 dark:border-white/5 pb-1 text-slate-400">
-              <span className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded">POST</span>
-              <span>/api/predict</span>
+          <div className="h-full flex flex-col justify-between font-mono text-[9.5px]">
+            <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+              <span className="text-[#E5FF45] font-semibold">POST /predict</span>
+              <span className="text-white/45 text-[8.5px] tabular-nums">&lt;15ms p95</span>
             </div>
-            
-            <div className="p-2 bg-slate-900 border border-slate-800 rounded text-slate-200 mt-2 text-[8px] leading-relaxed select-all">
+
+            <div className="p-2.5 bg-white/[0.04] border border-white/10 rounded-lg text-white/85 text-[8.5px] leading-relaxed">
               {"{ \"sepal_length\": 5.1, \"sepal_width\": 3.5, \"petal_length\": 1.4, \"petal_width\": 0.2 }"}
             </div>
 
-            <div className="flex items-center gap-2 text-emerald-500 font-bold mt-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Response 200 OK: {"{ \"species\": \"Iris Setosa\", \"probability\": 0.985 }"}</span>
+            <div className="flex items-center justify-between text-[9px] text-[#E5FF45] font-medium">
+              <span>200 OK → Iris Setosa</span>
+              <span className="tabular-nums text-white/50">confidence: 0.985</span>
             </div>
           </div>
         )
       },
       {
-        title: "Docker Container Structure",
-        subtitle: "How Scikit-learn and FastAPI are compiled inside compact alpine steps",
-        badge: "DOCKER MULTI-STAGE",
+        title: "Multi-Stage Docker Build",
+        subtitle: "Optimized container layers reducing image footprint by over 75%",
+        label: "Containerization",
         node: (
-          <div className="h-full flex flex-col justify-center space-y-2 font-mono text-[9px] leading-relaxed">
+          <div className="h-full flex flex-col justify-center space-y-2 font-mono text-[9.5px] leading-relaxed">
             <div className="flex items-center gap-2">
-              <div className="px-1.5 py-0.5 bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold rounded">STAGE 1</div>
-              <span className="text-slate-600 dark:text-slate-400">FROM python:3.10-slim AS builder</span>
+              <span className="text-white font-semibold">STAGE 1</span>
+              <span className="text-white/65">FROM python:3.10-slim AS builder</span>
             </div>
-            <div className="pl-4 text-slate-400 dark:text-slate-500 text-[8px]">
-              • pip install --user fastapi scikit-learn uvicorn numpy
+            <div className="pl-4 text-white/40 text-[8.5px]">
+              pip wheel fastapi scikit-learn uvicorn numpy
             </div>
             <div className="flex items-center gap-2">
-              <div className="px-1.5 py-0.5 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold rounded">STAGE 2</div>
-              <span className="text-slate-600 dark:text-slate-400">FROM alpine:latest (Only copy wheels)</span>
+              <span className="text-[#E5FF45] font-semibold">STAGE 2</span>
+              <span className="text-white/65">Runtime image (wheels + serialized model)</span>
             </div>
-            <div className="pl-4 text-[#b8d600] font-bold text-[8.5px]">
-              ✔ Production Image Size: 280MB instead of 1.2GB!
+            <div className="pl-4 text-[#E5FF45] font-semibold text-[9px] tabular-nums">
+              Final image: 280 MB (down from 1.2 GB)
             </div>
           </div>
         )
       },
       {
-        title: "Azure Container Cloud Routing",
-        subtitle: "Serving direct cloud model queries with dynamic scaling logs",
-        badge: "AZURE ARCHITECTURE",
+        title: "Azure Container Apps Routing",
+        subtitle: "ACR image registry to managed autoscaling cloud container apps",
+        label: "Cloud Deploy",
         node: (
-          <div className="h-full flex flex-col justify-between">
-            <div className="flex justify-between items-center bg-slate-100 dark:bg-slate-900/60 p-2 border border-black/5 dark:border-white/5 rounded-lg font-mono text-[9px]">
-              <span className="text-slate-500">// ACA CLUSTER SECURE REGISTRY</span>
-              <span className="px-2 py-0.5 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 rounded-full text-[8px] font-bold">HEALTHY</span>
+          <div className="h-full flex flex-col justify-between font-mono">
+            <div className="flex justify-between items-center bg-white/[0.04] px-2.5 py-1.5 border border-white/10 rounded-lg text-[9px]">
+              <span className="text-white/60">Azure Container Registry → ACA</span>
+              <span className="text-[#E5FF45] font-semibold">Healthy</span>
             </div>
 
-            <div className="flex items-center justify-around py-2.5">
+            <div className="flex items-center justify-around py-2">
               <div className="text-center">
-                <span className="block text-slate-400 text-[7px] uppercase">Azure ACR</span>
-                <span className="text-[10px] font-bold font-mono text-slate-700 dark:text-slate-300">Docker Image</span>
+                <span className="block text-white/40 text-[8px] uppercase">Registry</span>
+                <span className="text-[10px] font-semibold text-white">Azure ACR</span>
               </div>
-              <span className="text-[#E5FF45] font-extrabold text-[12px]">➔</span>
+              <span className="text-[#E5FF45] font-bold">→</span>
               <div className="text-center">
-                <span className="block text-slate-400 text-[7px] uppercase">FastAPI (ACA)</span>
-                <span className="text-[10px] font-bold font-mono text-[#b8d600]">Live Endpoint</span>
+                <span className="block text-white/40 text-[8px] uppercase">Runtime</span>
+                <span className="text-[10px] font-semibold text-[#E5FF45]">FastAPI Service</span>
               </div>
             </div>
 
-            <div className="text-[7.5px] font-mono text-slate-400 dark:text-slate-500 text-center">
-              Active serving: https://iris-deploy-mastan.onrender.com/docs
+            <div className="text-[8.5px] text-white/40 text-center truncate">
+              iris-deploy-mastan.onrender.com/docs
+            </div>
+          </div>
+        )
+      }
+    ],
+    "fangs-ent": [
+      {
+        title: "Interactive Game Hub",
+        subtitle: "Low-latency React state management with persistent user scoring",
+        label: "Frontend UI",
+        node: (
+          <div className="h-full flex flex-col justify-between font-mono">
+            <div className="flex justify-between items-center bg-white/[0.04] px-2.5 py-1.5 border border-white/10 rounded-lg">
+              <span className="text-[9px] text-white/75 font-medium">Session Ready</span>
+              <span className="text-[10px] text-[#E5FF45] font-semibold tabular-nums">8,420 XP</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5 text-[9.5px]">
+              <div className="p-2 bg-[#E5FF45]/10 border border-[#E5FF45]/30 rounded-lg flex items-center justify-between text-white">
+                <span>Code Maze</span>
+                <span className="text-[#E5FF45] font-semibold text-[8.5px]">Play</span>
+              </div>
+              <div className="p-2 bg-white/[0.04] border border-white/10 rounded-lg flex items-center justify-between text-white/75">
+                <span>Pop Trivia</span>
+                <span className="text-white/45 text-[8.5px]">Open</span>
+              </div>
+            </div>
+
+            <div className="text-[8.5px] text-white/45 text-center">
+              0.8s first paint · +45% interactive session engagement
+            </div>
+          </div>
+        )
+      },
+      {
+        title: "Logic Challenge Viewport",
+        subtitle: "Responsive timed coding trivia with instant answer validation",
+        label: "Game Loop",
+        node: (
+          <div className="h-full bg-white/[0.03] border border-white/10 rounded-lg p-3 flex flex-col justify-between">
+            <div>
+              <div className="flex justify-between items-center text-[8px] font-mono text-white/45 mb-1">
+                <span>Challenge 02</span>
+                <span className="text-[#E5FF45] font-semibold tabular-nums">45s Timer</span>
+              </div>
+              <p className="text-white/85 text-[9.5px] leading-snug">
+                Stabilize callback references inside high-frequency React renders:
+              </p>
+            </div>
+
+            <div className="space-y-1.5 font-mono text-[8.5px]">
+              <div className="w-full bg-black/50 border border-white/10 rounded px-2.5 py-1 text-white/50">
+                A) Mutate shared ref objects during render
+              </div>
+              <div className="w-full bg-[#E5FF45]/10 border border-[#E5FF45]/35 rounded px-2.5 py-1 text-[#E5FF45] flex items-center justify-between">
+                <span>B) Memoize dependency keys cleanly</span>
+                <span className="font-semibold">Correct</span>
+              </div>
+            </div>
+          </div>
+        )
+      },
+      {
+        title: "Client Persistence Pipeline",
+        subtitle: "Zero-latency browser sync preserving player progression",
+        label: "State Sync",
+        node: (
+          <div className="h-full flex flex-col justify-center space-y-3 font-mono text-[9.5px] px-2">
+            <div className="grid grid-cols-3 gap-2 items-center text-center">
+              <div className="p-2 bg-white/[0.04] border border-white/10 rounded-lg">
+                <Monitor size={12} className="mx-auto text-white/60 mb-1" />
+                <span className="text-white/85 block text-[8.5px]">React UI</span>
+              </div>
+
+              <div className="text-[9px] font-semibold text-[#E5FF45]">
+                <span>↔</span>
+                <span className="block text-[7.5px] text-white/45 mt-0.5">Local Sync</span>
+              </div>
+
+              <div className="p-2 bg-[#E5FF45]/10 border border-[#E5FF45]/30 rounded-lg text-[#E5FF45]">
+                <HardDrive size={12} className="mx-auto mb-1 text-[#E5FF45]" />
+                <span className="font-semibold block text-[8.5px]">LocalStorage</span>
+              </div>
+            </div>
+
+            <div className="p-1.5 bg-white/[0.03] border border-white/10 rounded-lg flex items-center justify-center gap-1.5 text-white/55 text-[8.5px]">
+              <CheckCircle2 size={10} className="text-[#E5FF45] shrink-0" />
+              <span>60% returning player session recovery</span>
             </div>
           </div>
         )
@@ -296,72 +278,66 @@ function ProjectGallery({ projectId }: { projectId: string }) {
   };
 
   const projectSlides = slides[projectId] || [];
-
-  const handleNext = () => {
-    setSlideIdx((prev) => (prev + 1) % projectSlides.length);
-  };
-
-  const handlePrev = () => {
-    setSlideIdx((prev) => (prev - 1 + projectSlides.length) % projectSlides.length);
-  };
-
   if (projectSlides.length === 0) return null;
 
   const currentSlide = projectSlides[slideIdx];
+  const handleNext = () => setSlideIdx((prev) => (prev + 1) % projectSlides.length);
+  const handlePrev = () => setSlideIdx((prev) => (prev - 1 + projectSlides.length) % projectSlides.length);
 
   return (
-    <div id={`carousel-${projectId}`} className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-4 mb-6 shadow-md select-none relative group/carousel transition-all">
+    <div
+      id={`carousel-${projectId}`}
+      className="w-full bg-[#0A0A0A] border border-white/10 rounded-xl p-4 mb-6 select-none"
+    >
       <div className="flex justify-between items-start mb-3 gap-4">
-        <div>
-          <span className="text-[8px] font-mono text-lime-400 tracking-wider uppercase bg-lime-400/10 border border-lime-400/20 px-2 py-0.5 rounded-full font-bold">
-            {currentSlide.badge}
-          </span>
-          <h4 className="text-xs font-semibold text-slate-100 font-display mt-2">
+        <div className="min-w-0">
+          <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-[#E5FF45] font-semibold">
+            {currentSlide.label}
+          </div>
+          <h4 className="text-sm font-semibold text-white font-display mt-0.5 truncate">
             {currentSlide.title}
           </h4>
-          <p className="text-[9px] text-slate-400 mt-0.5">
-            {currentSlide.subtitle}
-          </p>
+          <p className="text-[11px] text-white/45 mt-0.5 line-clamp-1">{currentSlide.subtitle}</p>
         </div>
 
-        {/* Slide Counter info */}
-        <span className="text-[9px] font-mono text-slate-500 shrink-0 select-none pt-0.5 font-semibold">
-          {slideIdx + 1} / {projectSlides.length}
+        <span className="text-[11px] font-mono text-white/40 shrink-0 tabular-nums">
+          0{slideIdx + 1} / 0{projectSlides.length}
         </span>
       </div>
 
-      {/* RENDER DYNAMIC COMPONENT PANEL CANVAS */}
-      <div className="h-[148px] bg-slate-950 border border-slate-900 rounded-xl p-3 flex flex-col justify-center relative overflow-hidden transition-all duration-300">
+      <div className="h-[144px] bg-[#060606] border border-white/10 rounded-lg p-3 flex flex-col justify-center overflow-hidden">
         {currentSlide.node}
       </div>
 
-      {/* Indicators tray */}
-      <div className="flex items-center justify-between mt-3.5 pt-1 border-t border-slate-800">
-        <div className="flex gap-1">
+      <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-white/10">
+        <div className="flex gap-1.5">
           {projectSlides.map((_, i) => (
             <button
               key={i}
+              type="button"
               onClick={() => setSlideIdx(i)}
-              className={`h-1 cursor-pointer transition-all duration-300 rounded-full ${
-                i === slideIdx ? "w-5 bg-lime-400" : "w-1.5 bg-slate-700 hover:bg-slate-600"
+              className={`h-1.5 cursor-pointer transition-all duration-200 rounded-full ${
+                i === slideIdx ? "w-6 bg-[#E5FF45]" : "w-1.5 bg-white/20 hover:bg-white/35"
               }`}
-              title={`Jump to Slide ${i + 1}`}
+              aria-label={`View slide ${i + 1}`}
             />
           ))}
         </div>
 
         <div className="flex items-center gap-1.5">
           <button
+            type="button"
             onClick={handlePrev}
-            className="p-1 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded text-slate-400 hover:text-white transition-all cursor-pointer"
-            title="Previous Visual Mock"
+            className="p-1.5 bg-white/[0.04] border border-white/10 hover:border-[#E5FF45]/50 rounded-md text-white/60 hover:text-[#E5FF45] transition-colors cursor-pointer"
+            aria-label="Previous preview"
           >
             <ChevronLeft size={13} />
           </button>
           <button
+            type="button"
             onClick={handleNext}
-            className="p-1 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded text-slate-400 hover:text-white transition-all cursor-pointer"
-            title="Next Visual Mock"
+            className="p-1.5 bg-white/[0.04] border border-white/10 hover:border-[#E5FF45]/50 rounded-md text-white/60 hover:text-[#E5FF45] transition-colors cursor-pointer"
+            aria-label="Next preview"
           >
             <ChevronRight size={13} />
           </button>
@@ -379,149 +355,173 @@ export default function Projects({ onSelectCaseStudy }: ProjectsProps) {
   );
 
   return (
-    <section id="projects" className="py-16 px-4 md:px-8 max-w-7xl mx-auto border-t border-slate-200 dark:border-slate-800">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+    <section id="projects" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 pb-6 border-b border-black/10 dark:border-white/10">
         <div>
-          <span className="text-xs font-mono text-lime-700 dark:text-lime-400 tracking-wider uppercase font-extrabold block">
-            // Showcase
+          <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-lime-700 dark:text-[#E5FF45] font-semibold block">
+            Selected Work
           </span>
-          <h2 className="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-white tracking-tight mt-1">
-            Featured Interlock Systems
+          <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-neutral-950 dark:text-white tracking-tight mt-1">
+            Featured Engineering Projects
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-1.5 max-w-lg">
-            High-efficiency architectures built manually focusing on modern layout speedups, automation logic, and UI design.
+          <p className="text-neutral-600 dark:text-white/55 text-sm sm:text-base mt-2 max-w-xl">
+            Production-ready AI automation pipelines, containerized cloud ML APIs, and responsive full-stack applications.
           </p>
         </div>
 
-        {/* Filter Categories */}
-        <div id="projects-filter-chips" className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-905 border border-slate-200 dark:border-slate-800 rounded-lg self-start">
+        {/* Segmented Category Filter */}
+        <div
+          id="projects-filter-chips"
+          className="inline-flex items-center gap-1 p-1 bg-black/[0.04] dark:bg-[#121212] border border-black/10 dark:border-white/10 rounded-xl self-start"
+        >
           {(["All", "AI", "Web"] as const).map((cat) => (
             <button
               key={cat}
               id={`filter-${cat}`}
+              type="button"
               onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 text-xs font-mono rounded-md uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+              className={`px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider rounded-lg transition-colors duration-150 cursor-pointer whitespace-nowrap ${
                 filter === cat
-                  ? "bg-slate-900 dark:bg-[#E5FF45] text-white dark:text-black font-semibold"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-transparent"
+                  ? "bg-neutral-950 dark:bg-[#E5FF45] text-[#E5FF45] dark:text-black font-bold"
+                  : "text-neutral-600 dark:text-white/55 hover:text-neutral-950 dark:hover:text-white"
               }`}
             >
-              {cat === "All" ? "All Systems" : cat === "AI" ? "AI & Agents" : "Web & Portal"}
+              {cat === "All" ? "All Projects" : cat === "AI" ? "AI & ML" : "Web Apps"}
             </button>
           ))}
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {filteredProjects.map((project, idx) => (
-          <div
+        {filteredProjects.map((project) => (
+          <article
             key={project.id}
             id={`project-card-${project.id}`}
-            className="flex flex-col bg-white dark:bg-[#121212] border border-slate-200 dark:border-slate-800 hover:border-lime-500/40 dark:hover:border-lime-400/40 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-sm group hover:shadow-md"
+            className="relative overflow-hidden flex flex-col bg-white dark:bg-[#121212] border border-black/10 dark:border-white/10 hover:border-lime-600/50 dark:hover:border-[#E5FF45]/45 rounded-2xl p-6 sm:p-7 transition-all duration-200 shadow-xs hover:shadow-md group"
           >
-            {/* Header */}
-            <div className="flex justify-between items-start mb-6">
-              <div className="flex items-center gap-3">
+            <div className="pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-[#E5FF45] blur-[90px] opacity-0 group-hover:opacity-15 transition-opacity duration-300" />
+
+            {/* Card Header */}
+            <div className="relative z-10 flex items-start justify-between gap-4 mb-4">
+              <div className="flex items-start gap-3.5">
                 <div
                   id={`project-icon-${project.id}`}
-                  className={`p-2.5 rounded-xl border ${
+                  className={`p-2.5 rounded-xl border shrink-0 ${
                     project.category === "AI"
-                      ? "bg-lime-500/10 dark:bg-lime-404/5 text-lime-700 dark:text-[#E5FF45] border-lime-500/20 dark:border-lime-404/10"
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+                      ? "bg-lime-500/10 dark:bg-[#E5FF45]/10 text-lime-700 dark:text-[#E5FF45] border-lime-600/25 dark:border-[#E5FF45]/25"
+                      : "bg-neutral-100 dark:bg-white/[0.06] text-neutral-800 dark:text-white/80 border-black/10 dark:border-white/10"
                   }`}
                 >
-                  {project.category === "AI" ? <Cpu size={20} /> : <Globe size={20} />}
+                  {project.category === "AI" ? <Cpu size={19} /> : <Globe size={19} />}
                 </div>
                 <div>
-                  <span className="text-10px font-mono text-lime-700 dark:text-lime-450 tracking-widest uppercase font-bold block">
-                    {project.period} • {project.role}
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-display font-medium text-slate-950 dark:text-white group-hover:text-lime-700 dark:group-hover:text-lime-400 transition-colors duration-300 mt-0.5">
+                  <div className="text-[11px] font-mono text-neutral-500 dark:text-white/45 tabular-nums">
+                    <span>{project.period}</span>
+                    <span className="mx-1.5 text-neutral-300 dark:text-white/20">·</span>
+                    <span>{project.role}</span>
+                  </div>
+                  <h3 className="text-xl font-display font-bold text-neutral-950 dark:text-white mt-0.5 tracking-tight">
                     {project.title}
                   </h3>
                 </div>
               </div>
-              <span className="text-xs font-mono px-3 py-1 bg-slate-50 dark:bg-slate-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-805 rounded-full">
+
+              <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-lime-700 dark:text-[#E5FF45] font-semibold shrink-0 pt-1">
                 {project.category}
               </span>
             </div>
 
-            {/* Main Desc */}
-            <p className="text-slate-650 dark:text-slate-300 text-sm leading-relaxed mb-6 font-light">
+            <p className="relative z-10 text-neutral-600 dark:text-white/60 text-sm leading-relaxed mb-5">
               {project.description}
             </p>
 
-            {/* Visual Carousel/Gallery of System Architecture Mocks */}
-            <ProjectGallery projectId={project.id} />
+            {/* Interactive System Preview Gallery */}
+            <div className="relative z-10">
+              <ProjectGallery projectId={project.id} />
+            </div>
 
-            {/* Bullets */}
-            <ul className="space-y-2.5 mb-6 flex-grow">
+            {/* Key Engineering Highlights */}
+            <ul className="relative z-10 space-y-2 mb-6 flex-grow">
               {project.bullets.map((bullet, bIdx) => (
-                <li key={bIdx} className="flex items-start gap-2.5 text-xs text-slate-605 dark:text-slate-400 leading-normal">
-                  <span className="w-1.5 h-1.5 rounded-full bg-lime-500 mt-1.5 shrink-0" />
+                <li key={bIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-600 dark:text-white/65 leading-relaxed">
+                  <span className="w-1.5 h-1.5 rounded-full bg-lime-600 dark:bg-[#E5FF45] mt-2 shrink-0" />
                   <span>{bullet}</span>
                 </li>
               ))}
             </ul>
 
-            {/* Metrics Dashboard */}
+            {/* Metrics Row */}
             {project.metrics && (
               <div
                 id={`project-metrics-${project.id}`}
-                className="grid grid-cols-3 gap-3 p-4 bg-slate-50 dark:bg-slate-900/40 rounded-xl border border-slate-200/60 dark:border-slate-800 mb-6"
+                className="relative z-10 grid grid-cols-3 gap-3 py-3.5 px-4 bg-neutral-50 dark:bg-[#080808] rounded-xl border border-black/10 dark:border-white/10 mb-5"
               >
                 {project.metrics.map((metric, mIdx) => (
                   <div key={mIdx} className="text-center">
-                    <span className="block text-xs font-mono text-slate-400 dark:text-slate-500 uppercase tracking-wider font-bold">
-                      {metric.label}
-                    </span>
-                    <span className="block text-base font-display font-semibold text-slate-800 dark:text-slate-200 mt-1">
+                    <span className="block text-base sm:text-lg font-display font-bold text-neutral-950 dark:text-[#E5FF45] tabular-nums">
                       {metric.value}
+                    </span>
+                    <span className="block text-[10px] font-mono uppercase tracking-wider text-neutral-500 dark:text-white/45 mt-0.5">
+                      {metric.label}
                     </span>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Tags Grid */}
-            <div className="flex flex-wrap gap-1.5 mb-6">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[10px] font-mono bg-slate-50 dark:bg-slate-900/40 px-2.5 py-1 rounded text-slate-600 dark:text-slate-400 border border-slate-250/50 dark:border-slate-850/80 shadow-2xs"
-                >
-                  {tag}
-                </span>
+            {/* Clean Unboxed Tech Stack Metadata */}
+            <div className="relative z-10 text-xs font-mono text-neutral-500 dark:text-white/45 mb-5 leading-relaxed">
+              {project.tags.map((tag, tIdx) => (
+                <React.Fragment key={tag}>
+                  <span className="text-neutral-800 dark:text-white/75">{tag}</span>
+                  {tIdx < project.tags.length - 1 && (
+                    <span className="mx-2 text-neutral-300 dark:text-white/20">·</span>
+                  )}
+                </React.Fragment>
               ))}
             </div>
 
-            {/* Footer Actions */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-5 border-t border-slate-100 dark:border-slate-800">
-              <div className="flex items-center gap-3">
+            {/* Footer Action Row */}
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+              <div className="flex flex-wrap items-center gap-2">
                 {project.github && (
                   <a
                     id={`project-git-${project.id}`}
                     href={project.github}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-1.5 px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-xl transition-all duration-300 cursor-pointer shadow-2xs hover:bg-slate-100 dark:hover:bg-slate-800"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-mono uppercase tracking-wider bg-neutral-50 dark:bg-[#080808] border border-black/10 dark:border-white/15 text-neutral-700 dark:text-white/75 hover:text-neutral-950 dark:hover:text-[#E5FF45] hover:border-black/30 dark:hover:border-[#E5FF45]/50 rounded-xl transition-colors"
                   >
-                    <Github size={13} />
-                    <span>Repository</span>
+                    <Github size={14} />
+                    <span>GitHub</span>
+                  </a>
+                )}
+
+                {project.demo && (
+                  <a
+                    id={`project-demo-${project.id}`}
+                    href={project.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-mono font-semibold uppercase tracking-wider bg-lime-500/10 dark:bg-[#E5FF45]/10 border border-lime-600/30 dark:border-[#E5FF45]/35 text-lime-800 dark:text-[#E5FF45] hover:bg-lime-500/20 dark:hover:bg-[#E5FF45]/20 rounded-xl transition-colors"
+                  >
+                    <ExternalLink size={13} />
+                    <span>Live API Docs</span>
                   </a>
                 )}
               </div>
 
               <button
                 id={`project-case-action-${project.id}`}
+                type="button"
                 onClick={() => onSelectCaseStudy(project.caseStudyId)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-950 dark:bg-[#E5FF45] hover:bg-slate-800 dark:hover:bg-lime-300 text-white dark:text-black text-xs font-mono font-bold uppercase rounded-xl tracking-wider transition-all duration-300 cursor-pointer group/btn shadow"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-neutral-950 dark:bg-[#E5FF45] hover:bg-neutral-800 dark:hover:bg-[#d8f332] text-[#E5FF45] dark:text-black text-xs font-mono font-bold uppercase tracking-wider rounded-xl transition-colors duration-200 cursor-pointer group/btn"
               >
-                <span>Explore Case Study</span>
-                <MoveRight size={13} className="group-hover/btn:translate-x-1 transition-transform text-lime-400 dark:text-slate-950" />
+                <span>Case Study</span>
+                <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5" />
               </button>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>
